@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import React from "react";
 
-export default function Home() {
+const Hero = () => {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex min-h-screen flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <div className="text-3xl font-bold text-zinc-600 dark:text-white">
         Welcome to Taskora
       </div>
@@ -13,4 +13,6 @@ export default function Home() {
       <Button className="mt-4">Get Started</Button>
     </div>
   );
-}
+};
+
+export default Hero;
