@@ -1,6 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { Field, FieldGroup, FieldLabel, FieldSeparator } from "../ui/field";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldSeparator,
+} from "../ui/field";
 import { Input } from "../ui/input";
 import { useForm } from "@tanstack/react-form";
 import { Button } from "../ui/button";
@@ -15,11 +21,12 @@ import { EyeIcon, EyeOff, Lock, Mail } from "lucide-react";
 import GoogleLoginComponent from "../modules/google-login/GoogleLogin";
 import Link from "next/link";
 import { set } from "zod";
-import { useLogin } from "@/hooks";
-import { useGoogleOAuth } from "@react-oauth/google";
+import { useGoogleOAuth, useLogin } from "@/hooks";
+
 import { loginSchema } from "@/validation";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Spinner } from "../ui/spinner";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -28,7 +35,7 @@ export const LoginForm = () => {
 
   const { mutate: login, isPending: loginPending } = useLogin();
 
-  // const { mutate: googleLogin } = useGoogleOAuth();
+  const { mutate: googLogin } = useGoogleOAuth();
 
   const form = useForm({
     defaultValues: {
@@ -61,6 +68,31 @@ export const LoginForm = () => {
     },
   });
 
+  // const handleGoogleSuccess = (credentialResponse: { credential?: string }) => {
+  //   const idToken = credentialResponse?.credential;
+
+  //   if (!idToken) {
+  //     toast.error("Google login failed");
+  //     return;
+  //   }
+
+  //   googLogin(
+  //     { idToken },
+  //     {
+  //       onSuccess: (res) => {
+  //         console.log(res);
+  //         toast.success("Login successful");
+
+  //         router.push("/");
+  //       },
+  //       onError: (err) => {
+  //         console.log(err);
+  //         toast.error(err.message);
+  //       },
+  //     },
+  //   );
+  // };
+
   return (
     <Card className="w-full shadow-sm ">
       <CardHeader className="">
@@ -81,8 +113,14 @@ export const LoginForm = () => {
           <FieldGroup className="gap-4">
             <form.Field name="email">
               {(field) => {
+                console.log(field.state.meta.errors);
+                console.log(field.state.meta.isTouched);
+                console.log(field.state.meta.isValid);
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+
                 return (
-                  <Field className="gap-2">
+                  <Field data-invalid={isInvalid} className="gap-2">
                     <FieldLabel htmlFor={field.name}>Email</FieldLabel>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -90,21 +128,27 @@ export const LoginForm = () => {
                         id={field.name}
                         name={field.name}
                         placeholder="Enter your email"
-                        type="email"
+                        // type="email"
                         value={field.state.value}
                         onChange={(e) => field.handleChange(e.target.value)}
                         className="h-10 bg-muted pl-10
                         "
                       />
                     </div>
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
                   </Field>
                 );
               }}
             </form.Field>
             <form.Field name="password">
               {(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+
                 return (
-                  <Field className="gap-2">
+                  <Field data-invalid={isInvalid} className="gap-2">
                     <FieldLabel htmlFor={field.name}>Password</FieldLabel>
 
                     <div className="relative">
@@ -131,13 +175,16 @@ export const LoginForm = () => {
                         )}
                       </button>
                     </div>
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
                   </Field>
                 );
               }}
             </form.Field>
 
-            <Button type="submit" className="w-full">
-              Login
+            <Button disabled={loginPending} type="submit" className="w-full">
+              {loginPending ? <Spinner /> : <>Login</>}
             </Button>
           </FieldGroup>
         </form>
