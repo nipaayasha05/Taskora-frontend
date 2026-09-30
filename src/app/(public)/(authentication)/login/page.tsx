@@ -22,15 +22,26 @@ export default function LoginPage() {
       </div>
 
       <div className="relative hidden min-h-svh lg:block">
-        <img
-          src="/home.jpg"
-          alt="home"
-          className="absolute left-1/2 top-1/2 h-[90%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-lg object-cover dark:brightness-[0.2] dark:grayscale"
-        />
-
-        <div className="absolute inset-y-0 left-1/2 flex items-center justify-end w-full max-w-xl">
-          <div className="w-full max-w-md">
-            <LoginForm />
+        <div className="absolute  min-h-[650px] max-w-5xl w-[70%] flex bg-slate-950 left-1/2 top-1/2  -translate-x-1/2 -translate-y-1/2  overflow-hidden rounded-lg text-gray-100  border">
+          <div className=" flex w-1/2 flex-col  text-white p-10">
+            <div>
+              <div className="max-w-sm">
+                <h2 className="text-4xl font-bold">
+                  Manage Your Work <br />
+                  <span className="text-slate-400">Move forward.</span>
+                </h2>
+              </div>
+            </div>
+            <img
+              src="/Login.png"
+              alt="Sign up"
+              className="absolute left-1/5 top-1/2 h-[350px] w-[350px] -translate-x-1/3 -translate-y-1/2 rounded-lg object-contain"
+            />
+          </div>
+          <div className=" flex w-1/2 items-center justify-center bg-background p-8">
+            <div className="w-full max-w-md">
+              <LoginForm />
+            </div>
           </div>
         </div>
       </div>

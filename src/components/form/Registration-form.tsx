@@ -11,13 +11,14 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Lock, Mail } from "lucide-react";
+import { Lock, Mail, User } from "lucide-react";
 import GoogleLoginComponent from "../modules/google-login/GoogleLogin";
 import Link from "next/link";
 
-export const LoginForm = () => {
+export const RegistrationForm = () => {
   const form = useForm({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -29,9 +30,9 @@ export const LoginForm = () => {
   return (
     <Card className="w-full shadow-sm ">
       <CardHeader className="">
-        <CardTitle>Welcome Back to Taskora</CardTitle>
+        <CardTitle>Create an account</CardTitle>
         <CardDescription>
-          Login to continue with your Taskora account
+          Join Taskora and start managing your projects.
         </CardDescription>
       </CardHeader>
 
@@ -43,7 +44,30 @@ export const LoginForm = () => {
             form.handleSubmit();
           }}
         >
-          <FieldGroup className="gap-4">
+          <FieldGroup className="gap-3">
+            <form.Field name="name">
+              {(field) => {
+                return (
+                  <Field className="gap-2">
+                    <FieldLabel htmlFor={field.name}>Name</FieldLabel>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        placeholder="Enter your name"
+                        type="text"
+                        value={field.state.value}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        className="h-10 bg-muted pl-10
+                        "
+                      />
+                    </div>
+                  </Field>
+                );
+              }}
+            </form.Field>
+
             <form.Field name="email">
               {(field) => {
                 return (
@@ -90,10 +114,11 @@ export const LoginForm = () => {
             </form.Field>
 
             <Button type="submit" className="w-full">
-              Login
+              Register
             </Button>
           </FieldGroup>
         </form>
+
         <FieldSeparator>Or continue with</FieldSeparator>
 
         <GoogleLoginComponent />
@@ -101,10 +126,10 @@ export const LoginForm = () => {
         <div className="text-center text-sm text-muted-foreground">
           Don&apos;t have an account?
           <Link
-            href="/registration"
+            href="/login"
             className="font-medium underline underline-offset-4 hover:text-primary"
           >
-            Register
+            Login
           </Link>
         </div>
       </CardContent>
