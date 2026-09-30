@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Field, FieldGroup, FieldLabel, FieldSeparator } from "../ui/field";
 import { Input } from "../ui/input";
 import { useForm } from "@tanstack/react-form";
@@ -11,18 +11,53 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Lock, Mail } from "lucide-react";
+import { EyeIcon, EyeOff, Lock, Mail } from "lucide-react";
 import GoogleLoginComponent from "../modules/google-login/GoogleLogin";
 import Link from "next/link";
+import { set } from "zod";
+import { useLogin } from "@/hooks";
+import { useGoogleOAuth } from "@react-oauth/google";
+import { loginSchema } from "@/validation";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
+  const router = useRouter();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const { mutate: login, isPending: loginPending } = useLogin();
+
+  // const { mutate: googleLogin } = useGoogleOAuth();
+
   const form = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
+    validators: {
+      onSubmit: loginSchema,
+    },
+
     onSubmit: async ({ value }) => {
-      console.log(value);
+      const loginData = {
+        email: value.email,
+        password: value.password,
+      };
+      console.log(loginData);
+
+      login(loginData, {
+        onSuccess: (res) => {
+          console.log(res);
+          toast.success("Login successful");
+
+          router.push("/");
+        },
+        onError: (err) => {
+          console.log(err);
+          toast.error(err.message);
+        },
+      });
     },
   });
 
@@ -77,12 +112,24 @@ export const LoginForm = () => {
                       <Input
                         id={field.name}
                         name={field.name}
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         value={field.state.value}
                         onChange={(e) => field.handleChange(e.target.value)}
                         placeholder="Enter your password"
                         className="h-10 bg-muted pl-10 -pb-10"
                       />
+
+                      <button
+                        className="absolute top-1/2 -translate-y-1/2 right-2"
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="text-gray-500 size-5" />
+                        ) : (
+                          <EyeIcon className="text-gray-500 size-5" />
+                        )}
+                      </button>
                     </div>
                   </Field>
                 );
