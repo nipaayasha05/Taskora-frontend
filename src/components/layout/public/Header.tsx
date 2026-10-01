@@ -64,14 +64,14 @@ export function Header() {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const { data: user } = useGetMe();
-  // console.log(user);
+  console.log("user", user);
 
   const dashboardHref =
-    user?.data?.role === "CUSTOMER"
-      ? "/dashboard/customer"
-      : user?.data?.role === "TECHNICIAN"
-        ? "/dashboard/technician"
-        : "/dashboard/admin";
+    user?.data?.systemRole === "ADMIN"
+      ? "/dashboard/admin"
+      : user?.data?.organizationRole
+        ? "/dashboard/organization"
+        : "/dashboard";
 
   const userMenuItems = [
     { label: "Profile", href: "/profile", icon: User },
@@ -80,20 +80,14 @@ export function Header() {
 
   const handleLogout = async (action: string) => {
     if (action === "dashboard") {
-      if (user?.data?.role === "CUSTOMER") {
-        router.push("/dashboard/customer");
-      } else if (user?.data?.role === "TECHNICIAN") {
-        router.push("/dashboard/technician");
-      } else if (user?.data?.role === "ADMIN") {
-        router.push("/dashboard/admin");
-      }
+      router.push(dashboardHref);
       return;
     }
 
     if (action === "logout") {
       // await logout();
       toast.success("Logout successfully");
-      router.push("/auth/login");
+      router.push("/login");
     }
   };
 
@@ -190,6 +184,46 @@ export function Header() {
                     );
                   })}
 
+                  {user?.data?.organizationMembers?.length > 0 && (
+                    <div className="border-t border-border/50">
+                      <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                        Organizations
+                      </div>
+
+                      <div>
+                        {user.data?.organizationMembers.map((member: any) => {
+                          const organization =
+                            user.data.createdOrganizations.find(
+                              (org: any) => org.id === member.organizationId,
+                            );
+
+                          return (
+                            <button
+                              key={member.id}
+                              type="button"
+                              onClick={() =>
+                                router.push(
+                                  `/dashboard/${member.organizationId}`,
+                                )
+                              }
+                              className="cursor-pointer flex w-full items-cente gap-3 rounded-md px-3 py- text-sm font-medium hover:bg-accent"
+                            >
+                              <div className="flex flex-col">
+                                <span>{organization?.name}</span>
+
+                                <span className="text-xs text-muted-foreground">
+                                  {member.role}
+                                </span>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      <DropdownMenuSeparator className="bg-border/50" />
+                    </div>
+                  )}
+
                   {/* Logged in user menu */}
                   {user?.success && (
                     <>
@@ -221,7 +255,7 @@ export function Header() {
 
                   {/* Guest login button */}
                   {/* {!user?.success && (
-                    <Link href="/auth/login">
+                    <Link href="/login">
                       <Button className="w-full mt-3">Login</Button>
                     </Link>
                   )} */}
@@ -251,9 +285,45 @@ export function Header() {
                       {user?.data?.email}
                     </p>
                   </div>
-
                   <DropdownMenuSeparator />
+                  {user?.data?.organizationMembers?.length > 0 && (
+                    <>
+                      <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                        Organizations
+                      </div>
 
+                      <DropdownMenuGroup>
+                        {user.data?.organizationMembers.map((member: any) => {
+                          const organization =
+                            user.data.createdOrganizations.find(
+                              (org: any) => org.id === member.organizationId,
+                            );
+
+                          return (
+                            <DropdownMenuItem
+                              key={member.id}
+                              onClick={() =>
+                                router.push(
+                                  `/dashboard/${member.organizationId}`,
+                                )
+                              }
+                              className="cursor-pointer"
+                            >
+                              <div className="flex flex-col">
+                                <span>{organization?.name}</span>
+
+                                <span className="text-xs text-muted-foreground">
+                                  {member.role}
+                                </span>
+                              </div>
+                            </DropdownMenuItem>
+                          );
+                        })}
+                      </DropdownMenuGroup>
+
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
                   <DropdownMenuGroup>
                     {userMenuItems.map((item) => {
                       const Icon = item.icon;
@@ -271,8 +341,46 @@ export function Header() {
                       );
                     })}
                   </DropdownMenuGroup>
-
                   <DropdownMenuSeparator />
+
+                  {user?.data?.organizationMembers?.length > 0 && (
+                    <>
+                      <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                        Organizations
+                      </div>
+
+                      <DropdownMenuGroup>
+                        {user.data?.organizationMembers.map((member: any) => {
+                          const organization =
+                            user.data.createdOrganizations.find(
+                              (org: any) => org.id === member.organizationId,
+                            );
+
+                          return (
+                            <DropdownMenuItem
+                              key={member.id}
+                              onClick={() =>
+                                router.push(
+                                  `/dashboard/${member.organizationId}`,
+                                )
+                              }
+                              className="cursor-pointer"
+                            >
+                              <div className="flex flex-col">
+                                <span>{organization?.name}</span>
+
+                                <span className="text-xs text-muted-foreground">
+                                  {member.role}
+                                </span>
+                              </div>
+                            </DropdownMenuItem>
+                          );
+                        })}
+                      </DropdownMenuGroup>
+
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
 
                   <DropdownMenuItem
                     onClick={() => handleLogout("logout")}
@@ -285,7 +393,7 @@ export function Header() {
               </DropdownMenu>
             </div>
           ) : (
-            <Link href="/auth/login">
+            <Link href="/login">
               <Button variant="default" className="cursor-pointer ">
                 Login
               </Button>
