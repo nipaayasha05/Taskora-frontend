@@ -1,5 +1,11 @@
-import { googleOAuth, userLogin, userRegistration, verifyAccount } from "@/api";
-import { useMutation } from "@tanstack/react-query";
+import {
+  getMe,
+  googleOAuth,
+  userLogin,
+  userRegistration,
+  verifyAccount,
+} from "@/api";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function useLogin() {
   return useMutation({
@@ -22,9 +28,12 @@ export function useRegistration() {
 export function useVerifyAccount() {
   return useMutation({
     mutationFn: verifyAccount,
+  });
+}
 
-    onError: (error) => {
-      console.log("HOOK ERROR:", error);
-    },
+export function useGetMe() {
+  return useQuery({
+    queryKey: ["me"],
+    queryFn: getMe,
   });
 }

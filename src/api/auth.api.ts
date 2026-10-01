@@ -26,15 +26,13 @@ export function userRegistration(payload: RegistrationPayload) {
   });
 }
 
-export async function verifyAccount(payload: VerifyAccountPaylod) {
-  try {
-    return await apiClient("/auth/verify-email", {
-      method: "POST",
-      body: payload,
-    });
-  } catch (error) {
-    console.log("ERROR JSON:", JSON.stringify(error, null, 2));
-    console.log(error);
-    throw error;
-  }
+export function verifyAccount(payload: VerifyAccountPaylod) {
+  return apiClient("/auth/verify-email", {
+    method: "POST",
+    body: payload,
+  });
+}
+
+export function getMe() {
+  return apiClient("/users/profile");
 }

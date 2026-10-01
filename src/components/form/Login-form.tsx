@@ -184,7 +184,13 @@ export const LoginForm = () => {
             </form.Field>
 
             <Button disabled={loginPending} type="submit" className="w-full">
-              {loginPending ? <Spinner /> : <>Login</>}
+              {loginPending ? (
+                <>
+                  <Spinner /> Login...
+                </>
+              ) : (
+                <>Login</>
+              )}
             </Button>
           </FieldGroup>
         </form>

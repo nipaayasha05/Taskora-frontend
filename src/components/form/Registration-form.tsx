@@ -180,7 +180,13 @@ export const RegistrationForm = () => {
             </form.Field>
 
             <Button disabled={registerPending} type="submit" className="w-full">
-              {registerPending ? <Spinner /> : <>Register</>}
+              {registerPending ? (
+                <>
+                  <Spinner /> Register...
+                </>
+              ) : (
+                <>Register</>
+              )}
             </Button>
           </FieldGroup>
         </form>

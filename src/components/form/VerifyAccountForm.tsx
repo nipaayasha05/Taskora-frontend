@@ -15,6 +15,7 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 import { Button } from "../ui/button";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { toast } from "sonner";
+import { Spinner } from "../ui/spinner";
 
 export const VerifyAccountForm = () => {
   const searchParams = useSearchParams();
@@ -143,7 +144,13 @@ export const VerifyAccountForm = () => {
           form="verify-account-form"
           disabled={isExpired || verifyAccountPending}
         >
-          {verifyAccountPending ? "Verifying..." : "Verify Account"}
+          {verifyAccountPending ? (
+            <>
+              <Spinner /> Verifying...
+            </>
+          ) : (
+            "Verify Account"
+          )}
         </Button>
       </CardFooter>
     </Card>
