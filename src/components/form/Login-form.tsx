@@ -27,6 +27,7 @@ import { loginSchema } from "@/validation";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Spinner } from "../ui/spinner";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -36,6 +37,8 @@ export const LoginForm = () => {
   const { mutate: login, isPending: loginPending } = useLogin();
 
   const { mutate: googLogin } = useGoogleOAuth();
+
+  const queryClient = useQueryClient();
 
   const form = useForm({
     defaultValues: {
@@ -57,6 +60,8 @@ export const LoginForm = () => {
         onSuccess: (res) => {
           console.log(res);
           toast.success("Login successful");
+
+          queryClient.invalidateQueries({ queryKey: ["me"] });
 
           router.push("/");
         },

@@ -8,7 +8,7 @@ import AuthLoading from "./auth-loading";
 
 interface IProps {
   children: ReactNode;
-  organizationRoles: OrganizationRole[];
+  organizationRoles?: OrganizationRole[];
   systemRoles: SystemRole[];
 }
 
@@ -26,7 +26,7 @@ export const RoleGuard = ({
 
   const isSystemAuthorized = !!user && systemRoles.includes(user.systemRole);
   const isOrganizationAuthorized =
-    !!user && organizationRoles.includes(user.organizationRole);
+    !!user && organizationRoles?.includes(user.organizationRole);
 
   const isAuthorized = isSystemAuthorized || isOrganizationAuthorized;
 

@@ -15,6 +15,7 @@ import {
   Moon,
   Menu,
   BookOpen,
+  Building2,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -38,6 +39,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Logo from "./Logo";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 
 // Nav links kept in an array to stay organized
 const navLinks = [
@@ -78,6 +80,8 @@ export function Header() {
     { label: "Dashboard", href: dashboardHref, icon: LayoutDashboard },
   ];
 
+  const queryClient = useQueryClient();
+
   const handleLogout = async (action: string) => {
     if (action === "dashboard") {
       router.push(dashboardHref);
@@ -87,6 +91,11 @@ export function Header() {
     if (action === "logout") {
       // await logout();
       toast.success("Logout successfully");
+
+      queryClient.removeQueries({
+        queryKey: ["me"],
+      });
+
       router.push("/login");
     }
   };
@@ -185,7 +194,7 @@ export function Header() {
                   })}
 
                   {user?.data?.organizationMembers?.length > 0 && (
-                    <div className="border-t border-border/50">
+                    <div className="border-t border-border/50 space-y-1 ">
                       <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
                         Organizations
                       </div>
@@ -206,14 +215,18 @@ export function Header() {
                                   `/dashboard/${member.organizationId}`,
                                 )
                               }
-                              className="cursor-pointer flex w-full items-cente gap-3 rounded-md px-3 py- text-sm font-medium hover:bg-accent"
+                              className="cursor-pointer flex w-full items-cente gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent"
                             >
-                              <div className="flex flex-col">
-                                <span>{organization?.name}</span>
+                              <div className="flex items-center gap-2 ">
+                                <Building2 className="h-5 w-5" />
 
-                                <span className="text-xs text-muted-foreground">
-                                  {member.role}
-                                </span>
+                                <div className="flex flex-col items-start">
+                                  <span>{organization?.name}</span>
+
+                                  <span className="text-xs text-muted-foreground">
+                                    {member.role}
+                                  </span>
+                                </div>
                               </div>
                             </button>
                           );
@@ -286,7 +299,7 @@ export function Header() {
                     </p>
                   </div>
                   <DropdownMenuSeparator />
-                  {user?.data?.organizationMembers?.length > 0 && (
+                  {/* {user?.data?.organizationMembers?.length > 0 && (
                     <>
                       <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
                         Organizations
@@ -323,7 +336,7 @@ export function Header() {
 
                       <DropdownMenuSeparator />
                     </>
-                  )}
+                  )} */}
                   <DropdownMenuGroup>
                     {userMenuItems.map((item) => {
                       const Icon = item.icon;
@@ -366,12 +379,15 @@ export function Header() {
                               }
                               className="cursor-pointer"
                             >
-                              <div className="flex flex-col">
-                                <span>{organization?.name}</span>
+                              <div className="flex items-center gap-2 ">
+                                <Building2 className="h-5 w-5" />
+                                <div className="flex flex-col">
+                                  <span>{organization?.name}</span>
 
-                                <span className="text-xs text-muted-foreground">
-                                  {member.role}
-                                </span>
+                                  <span className="text-xs text-muted-foreground">
+                                    {member.role}
+                                  </span>
+                                </div>
                               </div>
                             </DropdownMenuItem>
                           );

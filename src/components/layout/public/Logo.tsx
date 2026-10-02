@@ -5,9 +5,15 @@ import Link from "next/link";
 
 type LogoProps = {
   darkOnly?: boolean;
+  showText?: boolean;
+  size?: string;
 };
 
-export const Logo = ({ darkOnly = false }: LogoProps) => {
+export const Logo = ({
+  darkOnly = false,
+  showText = true,
+  size = "h-16 w-16",
+}: LogoProps) => {
   return (
     <Link href="/" className="flex items-center gap-1 shrink-0">
       <div className="">
@@ -26,7 +32,8 @@ export const Logo = ({ darkOnly = false }: LogoProps) => {
               alt="Light Logo"
               width={60}
               height={55}
-              className="block dark:hidden h-16 w-16 object-contain"
+              // className="block dark:hidden h-16 w-16 object-contain"
+              className={`${size} object-contain block dark:hidden `}
             />
             <Image
               src="/taskora-dark-theme.png"
@@ -40,16 +47,11 @@ export const Logo = ({ darkOnly = false }: LogoProps) => {
       </div>
 
       <h1 className="text-2xl font-extrabold tracking-tight">
-        {darkOnly ? (
-          <>
-            <span className=" text-white">Task</span>
-            <span className=" text-blue-400">ora</span>
-          </>
-        ) : (
-          <>
+        {showText && (
+          <div className="text-2xl font-extrabold tracking-tight">
             <span className="text-slate-900 dark:text-white">Task</span>
             <span className="text-blue-500 dark:text-blue-400">ora</span>
-          </>
+          </div>
         )}
       </h1>
     </Link>
