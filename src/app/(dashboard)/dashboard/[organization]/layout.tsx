@@ -1,4 +1,3 @@
-"use client";
 import { RoleGuard } from "@/components/auth/role-guard";
 import OrganizationDashboard from "@/components/dashboard/organization-dashboard";
 import React, { ReactNode } from "react";
