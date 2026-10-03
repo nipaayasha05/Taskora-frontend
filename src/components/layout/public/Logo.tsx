@@ -23,7 +23,7 @@ export const Logo = ({
             alt="Dark Logo"
             width={60}
             height={55}
-            className=" h-16 w-16 object-contain"
+            className={`${size} object-contain`}
           />
         ) : (
           <>
@@ -40,7 +40,7 @@ export const Logo = ({
               alt="Taskora Logo"
               width={60}
               height={55}
-              className="hidden h-16 w-16 object-contain dark:block"
+              className={`hidden ${size} object-contain dark:block`}
             />
           </>
         )}

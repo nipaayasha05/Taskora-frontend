@@ -44,7 +44,7 @@ export function DashboardSidebar({
     <Sidebar collapsible="icon" className="border-r">
       <SidebarHeader className="h-14 px-2">
         {" "}
-        <Logo showText={state !== "collapsed"} />
+        <Logo size="h-10 w-10 " showText={state !== "collapsed"} />
       </SidebarHeader>
 
       <SidebarContent>

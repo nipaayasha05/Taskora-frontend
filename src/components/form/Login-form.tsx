@@ -20,7 +20,7 @@ import {
 import { EyeIcon, EyeOff, Lock, Mail } from "lucide-react";
 import GoogleLoginComponent from "../modules/google-login/GoogleLogin";
 import Link from "next/link";
-import { set } from "zod";
+
 import { useGoogleOAuth, useLogin } from "@/hooks";
 
 import { loginSchema } from "@/validation";
@@ -72,31 +72,6 @@ export const LoginForm = () => {
       });
     },
   });
-
-  // const handleGoogleSuccess = (credentialResponse: { credential?: string }) => {
-  //   const idToken = credentialResponse?.credential;
-
-  //   if (!idToken) {
-  //     toast.error("Google login failed");
-  //     return;
-  //   }
-
-  //   googLogin(
-  //     { idToken },
-  //     {
-  //       onSuccess: (res) => {
-  //         console.log(res);
-  //         toast.success("Login successful");
-
-  //         router.push("/");
-  //       },
-  //       onError: (err) => {
-  //         console.log(err);
-  //         toast.error(err.message);
-  //       },
-  //     },
-  //   );
-  // };
 
   return (
     <Card className="w-full shadow-sm ">

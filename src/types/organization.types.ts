@@ -26,3 +26,14 @@ export type UserData = {
   createdOrganizations: Organization[];
   organizationMembers: OrganizationMember[];
 };
+
+export type CreateOrganization = {
+  name: string;
+  description: string;
+  industry: string;
+};
+
+export type CreateOrganizationPayload = {
+  data: CreateOrganization;
+  logo?: File;
+};
