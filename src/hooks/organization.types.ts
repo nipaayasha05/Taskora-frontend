@@ -1,8 +1,15 @@
-import { createOrganization } from "@/api";
-import { useMutation } from "@tanstack/react-query";
+import { createOrganization, getOrganizationsForAdmin } from "@/api";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function useCreateOrganization() {
   return useMutation({
     mutationFn: createOrganization,
+  });
+}
+
+export function useCreateOrganizationForAdmin() {
+  return useQuery({
+    queryKey: ["organizations"],
+    queryFn: getOrganizationsForAdmin,
   });
 }

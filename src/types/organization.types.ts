@@ -3,7 +3,9 @@ export type Organization = {
   name: string;
   description: string;
   industry: string;
+  status: string;
   logo: string | null;
+  createdAt: string;
 };
 
 export type OrganizationMember = {

@@ -15,3 +15,7 @@ export function createOrganization(payload: CreateOrganizationPayload) {
     body: formData,
   });
 }
+
+export function getOrganizationsForAdmin() {
+  return apiClient("/organizations");
+}
