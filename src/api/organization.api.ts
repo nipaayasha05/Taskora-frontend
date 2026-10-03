@@ -1,5 +1,8 @@
 import apiClient from "@/lib/apiClient";
-import { CreateOrganizationPayload } from "@/types";
+import {
+  CreateOrganizationPayload,
+  UpdateOrganizationRequestPayload,
+} from "@/types";
 
 export function createOrganization(payload: CreateOrganizationPayload) {
   const formData = new FormData();
@@ -18,4 +21,13 @@ export function createOrganization(payload: CreateOrganizationPayload) {
 
 export function getOrganizationsForAdmin() {
   return apiClient("/organizations");
+}
+
+export function UpdateOrganizationRequest(
+  payload: UpdateOrganizationRequestPayload,
+) {
+  return apiClient(`/organizations/${payload.organizationId}/status`, {
+    method: "PATCH",
+    body: payload,
+  });
 }

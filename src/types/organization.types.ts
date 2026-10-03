@@ -39,3 +39,8 @@ export type CreateOrganizationPayload = {
   data: CreateOrganization;
   logo?: File;
 };
+
+export type UpdateOrganizationRequestPayload = {
+  organizationId: string;
+  status: "PENDING" | "APPROVED" | "REJECTED";
+};
