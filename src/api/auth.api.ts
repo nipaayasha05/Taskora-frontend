@@ -36,3 +36,11 @@ export function verifyAccount(payload: VerifyAccountPaylod) {
 export function getMe() {
   return apiClient("/users/profile");
 }
+
+export function getUsers(search?: string) {
+  return apiClient("/auth/users", {
+    query: {
+      search,
+    },
+  });
+}

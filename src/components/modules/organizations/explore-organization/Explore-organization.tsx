@@ -1,5 +1,5 @@
 "use client";
-import { useGetAllOrganizationForPublic } from "@/hooks/organization.types";
+import { useGetAllOrganizationForPublic } from "@/hooks/organization.hooks";
 import React from "react";
 import ExploreOrganizationCard from "./Explore-organization-card";
 import { PublicOrganization } from "@/types";

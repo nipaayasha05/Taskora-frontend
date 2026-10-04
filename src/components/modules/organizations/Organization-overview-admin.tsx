@@ -12,7 +12,7 @@ import {
 import {
   useCreateOrganizationForAdmin,
   useUpdateOrganizationRequest,
-} from "@/hooks/organization.types";
+} from "@/hooks/organization.hooks";
 import { Organization } from "@/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { Building2, CalendarDays, Pencil } from "lucide-react";

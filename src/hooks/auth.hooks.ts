@@ -1,5 +1,6 @@
 import {
   getMe,
+  getUsers,
   googleOAuth,
   userLogin,
   userRegistration,
@@ -35,5 +36,12 @@ export function useGetMe() {
   return useQuery({
     queryKey: ["me"],
     queryFn: getMe,
+  });
+}
+
+export function useGetUsers(search?: string) {
+  return useQuery({
+    queryKey: ["users", search],
+    queryFn: () => getUsers(search),
   });
 }

@@ -4,6 +4,7 @@ import {
   UsersRound,
   ListChecks,
   UserRoundCog,
+  UserPlus,
 } from "lucide-react";
 
 export const managerRoutes = [
@@ -14,6 +15,11 @@ export const managerRoutes = [
         title: "Overview",
         url: "",
         icon: LayoutDashboard,
+      },
+      {
+        title: "Invite Members",
+        url: "/invite-members",
+        icon: UserPlus,
       },
       {
         title: "Projects",

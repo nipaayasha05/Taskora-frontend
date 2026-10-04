@@ -23,7 +23,7 @@ const OrganizationDashboard = ({
   };
 
   const organizationName = user?.data?.createdOrganizations?.find(
-    (org: Organization) => org.id === organization,
+    (org: Organization) => slugify(org.name) === organization,
   );
 
   const member = user?.data?.organizationMembers.find(
@@ -31,21 +31,16 @@ const OrganizationDashboard = ({
       member.organizationId === organizationName?.id,
   );
 
-  const organizationSlug = organizationName
-    ? slugify(organizationName.name)
-    : "";
-
-  useEffect(() => {
-    if (!isPending && organizationSlug && organization !== organizationSlug) {
-      router.replace(`/dashboard/${organizationSlug}`);
-    }
-  }, [isPending, organization, organizationSlug, router]);
-
   if (isPending) {
     return <div>Loading...</div>;
   }
 
+  if (!organizationName || !member) {
+    router.replace("/dashboard");
+  }
+
   const role = member?.role;
+  console.log(role, "role");
 
   const routes =
     role === "OWNER"
@@ -55,7 +50,7 @@ const OrganizationDashboard = ({
         : teamMemberRoutes;
 
   return (
-    <DashboardShell routes={routes} organization={organizationSlug}>
+    <DashboardShell routes={routes} organization={organization}>
       {children}
     </DashboardShell>
   );

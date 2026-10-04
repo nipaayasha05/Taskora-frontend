@@ -1,4 +1,4 @@
-import ExploreOrganization from "@/components/modules/organizations/Explore-organization";
+import ExploreOrganization from "@/components/modules/organizations/explore-organization/Explore-organization";
 import React from "react";
 
 const AllOrganizationPage = () => {

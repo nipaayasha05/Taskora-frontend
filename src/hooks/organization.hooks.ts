@@ -1,6 +1,8 @@
 import {
   createOrganization,
+  createOrganizationJoinRequest,
   getAllOrganizationForPublic,
+  getOrganizationJoinRequest,
   getOrganizationsForAdmin,
   UpdateOrganizationRequest,
 } from "@/api";
@@ -25,9 +27,25 @@ export function useUpdateOrganizationRequest() {
   });
 }
 
+export function useCreateOrganizationJoinRequest() {
+  return useMutation({
+    mutationFn: createOrganizationJoinRequest,
+  });
+}
+
 export function useGetAllOrganizationForPublic() {
   return useQuery({
     queryKey: ["organizations"],
     queryFn: getAllOrganizationForPublic,
+  });
+}
+
+export function useGetOrganizationJoinRequest(
+  organizationId: string | undefined,
+) {
+  return useQuery({
+    queryKey: ["organizations", organizationId],
+    queryFn: () => getOrganizationJoinRequest(organizationId!),
+    enabled: !!organizationId,
   });
 }

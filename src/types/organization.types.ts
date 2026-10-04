@@ -66,3 +66,36 @@ export type PublicOrganization = {
     projects: number;
   };
 };
+
+export type CreateOrganizationJoinRequestPayload = {
+  organizationId: string;
+  invitedToId: string;
+};
+
+export type OrganizationJoinRequest = {
+  id: string;
+  invitedById: string;
+  invitedToId: string;
+  role: "OWNER" | "MANAGER";
+  status: "PENDING" | "APPROVED" | "REJECTED";
+  createdAt: string;
+  updatedAt: string;
+
+  invitedTo: {
+    id: string;
+    name: string;
+    email: string;
+    systemRole: "USER" | "ADMIN";
+    status: string;
+    emailVerified: boolean;
+  };
+
+  organization: {
+    id: string;
+    name: string;
+    description: string;
+    industry: string;
+    logo: string | null;
+    status: string;
+  };
+};

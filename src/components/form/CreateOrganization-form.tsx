@@ -29,7 +29,7 @@ import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
 import Link from "next/link";
 import { useForm } from "@tanstack/react-form";
-import { useCreateOrganization } from "@/hooks/organization.types";
+import { useCreateOrganization } from "@/hooks/organization.hooks";
 import { createOrganizationSchema } from "@/validation";
 import { toast } from "sonner";
 import { CreateOrganizationPayload } from "@/types";

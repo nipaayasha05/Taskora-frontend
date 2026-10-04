@@ -200,9 +200,9 @@ export function Header() {
                       </div>
 
                       <div>
-                        {user.data?.organizationMembers.map((member: any) => {
+                        {user?.data?.organizationMembers.map((member: any) => {
                           const organization =
-                            user.data.createdOrganizations.find(
+                            user?.data?.createdOrganizations.find(
                               (org: any) => org.id === member.organizationId,
                             );
 
@@ -210,11 +210,16 @@ export function Header() {
                             <button
                               key={member.id}
                               type="button"
-                              onClick={() =>
-                                router.push(
-                                  `/dashboard/${member.organizationId}`,
-                                )
-                              }
+                              onClick={() => {
+                                const slug = organization?.name
+                                  ?.toLocaleLowerCase()
+                                  .trim()
+                                  .replace(/\s+/g, "-");
+
+                                if (slug) {
+                                  router.push(`/dashboard/${slug}`);
+                                }
+                              }}
                               className="cursor-pointer flex w-full items-cente gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent"
                             >
                               <div className="flex items-center gap-2 ">
@@ -299,44 +304,7 @@ export function Header() {
                     </p>
                   </div>
                   <DropdownMenuSeparator />
-                  {/* {user?.data?.organizationMembers?.length > 0 && (
-                    <>
-                      <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
-                        Organizations
-                      </div>
 
-                      <DropdownMenuGroup>
-                        {user.data?.organizationMembers.map((member: any) => {
-                          const organization =
-                            user.data.createdOrganizations.find(
-                              (org: any) => org.id === member.organizationId,
-                            );
-
-                          return (
-                            <DropdownMenuItem
-                              key={member.id}
-                              onClick={() =>
-                                router.push(
-                                  `/dashboard/${member.organizationId}`,
-                                )
-                              }
-                              className="cursor-pointer"
-                            >
-                              <div className="flex flex-col">
-                                <span>{organization?.name}</span>
-
-                                <span className="text-xs text-muted-foreground">
-                                  {member.role}
-                                </span>
-                              </div>
-                            </DropdownMenuItem>
-                          );
-                        })}
-                      </DropdownMenuGroup>
-
-                      <DropdownMenuSeparator />
-                    </>
-                  )} */}
                   <DropdownMenuGroup>
                     {userMenuItems.map((item) => {
                       const Icon = item.icon;
@@ -372,11 +340,16 @@ export function Header() {
                           return (
                             <DropdownMenuItem
                               key={member.id}
-                              onClick={() =>
-                                router.push(
-                                  `/dashboard/${member.organizationId}`,
-                                )
-                              }
+                              onClick={() => {
+                                const slug = organization?.name
+                                  ?.toLocaleLowerCase()
+                                  .trim()
+                                  .replace(/\s+/g, "-");
+
+                                if (slug) {
+                                  router.push(`/dashboard/${slug}`);
+                                }
+                              }}
                               className="cursor-pointer"
                             >
                               <div className="flex items-center gap-2 ">

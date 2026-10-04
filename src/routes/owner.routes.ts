@@ -5,6 +5,7 @@ import {
   ListChecks,
   UserRoundCog,
   Settings,
+  UserPlus,
 } from "lucide-react";
 
 export const ownerRoutes = [
@@ -15,6 +16,11 @@ export const ownerRoutes = [
         title: "Overview",
         url: "",
         icon: LayoutDashboard,
+      },
+      {
+        title: "Invite Members",
+        url: "/invite-members",
+        icon: UserPlus,
       },
       {
         title: "Projects",
