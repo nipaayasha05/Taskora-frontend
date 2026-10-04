@@ -45,7 +45,7 @@ import { QueryClient, useQueryClient } from "@tanstack/react-query";
 const navLinks = [
   { label: "Home", href: "/", icon: House },
   { label: "Services", href: "/services", icon: BriefcaseBusiness },
-  { label: "Technicians", href: "/technicians", icon: Users },
+  { label: "Organizations", href: "/organizations", icon: Building2 },
   { label: "About", href: "/about", icon: Info },
   {
     label: "Blogs",

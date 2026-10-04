@@ -44,3 +44,25 @@ export type UpdateOrganizationRequestPayload = {
   organizationId: string;
   status: "PENDING" | "APPROVED" | "REJECTED";
 };
+
+export type PublicOrganization = {
+  id: string;
+  name: string;
+  description: string;
+  logo: string | null;
+
+  members: {
+    role: "OWNER" | "MANAGER";
+    user: {
+      name: string;
+      email: string;
+      profile: {
+        contactNumber: string | null;
+      } | null;
+    };
+  }[];
+
+  _count: {
+    projects: number;
+  };
+};

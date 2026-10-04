@@ -1,0 +1,23 @@
+"use client";
+import { useGetAllOrganizationForPublic } from "@/hooks/organization.types";
+import React from "react";
+import ExploreOrganizationCard from "./Explore-organization-card";
+import { PublicOrganization } from "@/types";
+
+const ExploreOrganization = () => {
+  const { data, isLoading, isError } = useGetAllOrganizationForPublic();
+  console.log(data);
+
+  return (
+    <div className="grid gap-6  md:grid-cols-2 xl:grid-cols-3">
+      {data?.data?.map((organization: PublicOrganization) => (
+        <ExploreOrganizationCard
+          key={organization.id}
+          organization={organization}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default ExploreOrganization;

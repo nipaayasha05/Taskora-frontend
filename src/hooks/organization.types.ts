@@ -1,5 +1,6 @@
 import {
   createOrganization,
+  getAllOrganizationForPublic,
   getOrganizationsForAdmin,
   UpdateOrganizationRequest,
 } from "@/api";
@@ -21,5 +22,12 @@ export function useCreateOrganizationForAdmin() {
 export function useUpdateOrganizationRequest() {
   return useMutation({
     mutationFn: UpdateOrganizationRequest,
+  });
+}
+
+export function useGetAllOrganizationForPublic() {
+  return useQuery({
+    queryKey: ["organizations"],
+    queryFn: getAllOrganizationForPublic,
   });
 }

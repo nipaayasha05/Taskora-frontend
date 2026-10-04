@@ -31,3 +31,7 @@ export function UpdateOrganizationRequest(
     body: payload,
   });
 }
+
+export function getAllOrganizationForPublic() {
+  return apiClient("/organizations/public");
+}
