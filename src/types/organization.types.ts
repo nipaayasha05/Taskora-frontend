@@ -14,6 +14,10 @@ export type OrganizationMember = {
   userId: string;
   role: "OWNER" | "MANAGER" | "TEAM_MEMBER";
   createdAt: string;
+  organization: {
+    id: string;
+    name: string;
+  };
 };
 
 export type UserData = {
@@ -90,6 +94,15 @@ export type OrganizationJoinRequest = {
     emailVerified: boolean;
   };
 
+  invitedBy: {
+    id: string;
+    name: string;
+    email: string;
+    systemRole: "USER" | "ADMIN";
+    status: string;
+    emailVerified: boolean;
+  };
+
   organization: {
     id: string;
     name: string;
@@ -98,4 +111,10 @@ export type OrganizationJoinRequest = {
     logo: string | null;
     status: string;
   };
+};
+
+export type UpdateOrganizationJoinRequestPayload = {
+  organizationId: string;
+  invitedToId: string;
+  status: "APPROVED" | "REJECTED";
 };

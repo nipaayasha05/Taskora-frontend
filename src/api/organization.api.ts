@@ -2,6 +2,7 @@ import apiClient from "@/lib/apiClient";
 import {
   CreateOrganizationJoinRequestPayload,
   CreateOrganizationPayload,
+  UpdateOrganizationJoinRequestPayload,
   UpdateOrganizationRequestPayload,
 } from "@/types";
 
@@ -40,6 +41,7 @@ export function getAllOrganizationForPublic() {
 export function createOrganizationJoinRequest(
   payload: CreateOrganizationJoinRequestPayload,
 ) {
+  console.log("payload", payload);
   return apiClient(`/organizations/${payload.organizationId}/join`, {
     method: "POST",
     body: payload,
@@ -48,4 +50,17 @@ export function createOrganizationJoinRequest(
 
 export function getOrganizationJoinRequest(organizationId: string) {
   return apiClient(`/organizations/${organizationId}/join`);
+}
+
+export function getUserOrganizationJoinRequest() {
+  return apiClient(`/organizations/join/my-join`);
+}
+
+export function UpdateOrganizationJoinRequest(
+  payload: UpdateOrganizationJoinRequestPayload,
+) {
+  return apiClient(`/organizations/${payload.organizationId}/join`, {
+    method: "PATCH",
+    body: payload,
+  });
 }

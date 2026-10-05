@@ -1,4 +1,4 @@
-import { LayoutDashboard, CreditCard, Building2 } from "lucide-react";
+import { LayoutDashboard, CreditCard, Building2, MailPlus } from "lucide-react";
 
 export const userRoutes = [
   {
@@ -13,6 +13,11 @@ export const userRoutes = [
         title: "Create Organization",
         url: "/dashboard/create-organization",
         icon: Building2,
+      },
+      {
+        title: "Invitations",
+        url: "/dashboard/invitations",
+        icon: MailPlus,
       },
       {
         title: "Payment",

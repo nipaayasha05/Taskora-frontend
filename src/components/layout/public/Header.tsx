@@ -68,10 +68,11 @@ export function Header() {
   const { data: user } = useGetMe();
   console.log("user", user);
 
+  const organizationMember = user?.data?.organizationMembers?.[0];
   const dashboardHref =
     user?.data?.systemRole === "ADMIN"
       ? "/dashboard/admin"
-      : user?.data?.organizationRole
+      : organizationMember?.organization?.name
         ? "/dashboard/organization"
         : "/dashboard";
 
@@ -202,9 +203,10 @@ export function Header() {
                       <div>
                         {user?.data?.organizationMembers.map((member: any) => {
                           const organization =
-                            user?.data?.createdOrganizations.find(
-                              (org: any) => org.id === member.organizationId,
-                            );
+                            // user?.data?.organizationMembers.find(
+                            //   (org: any) => org.id === member.organizationId,
+                            // );
+                            member.organization;
 
                           return (
                             <button
@@ -333,9 +335,10 @@ export function Header() {
                       <DropdownMenuGroup>
                         {user.data?.organizationMembers.map((member: any) => {
                           const organization =
-                            user.data.createdOrganizations.find(
-                              (org: any) => org.id === member.organizationId,
-                            );
+                            // user?.data?.organizationMembers.find(
+                            //   (org: any) => org.id === member.organizationId,
+                            // );
+                            member.organization;
 
                           return (
                             <DropdownMenuItem

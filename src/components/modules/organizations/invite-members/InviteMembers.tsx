@@ -1,13 +1,6 @@
 "use client";
-import { Input } from "@/components/ui/input";
 import { useGetMe, useGetUsers } from "@/hooks";
-import useDebounce from "@/hooks/debounce.hook";
-import {
-  Organization,
-  OrganizationJoinRequest,
-  OrganizationMember,
-  User,
-} from "@/types";
+import { OrganizationJoinRequest, OrganizationMember, User } from "@/types";
 import React, { useState } from "react";
 import InviteMembersInput from "./InviteMembersInput";
 import { Button } from "@/components/ui/button";
@@ -18,22 +11,29 @@ import {
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 
-const InviteMembers = () => {
+const InviteMembers = (
+  // { organizationId }: InviteMembersProps
+) => {
   const [selectedUsers, setSelectedUsers] = useState<User | null>(null);
 
   const { data: me } = useGetMe();
   console.log("me", me);
   const params = useParams();
-  // const organizationId = params.organizationId as string;
+  console.log("params", params);
 
   const { mutate: createOrganizationJoinRequest } =
     useCreateOrganizationJoinRequest();
 
-  const organizationId = me?.data?.organizationMembers?.[0]?.organizationId;
+  const organizationSlug = params.organization as string;
+
+  const organizationId = me?.data?.organizationMembers?.find(
+    (member: OrganizationMember) =>
+      member.organization?.name.toLowerCase().replace(/\s+/g, "-") ===
+      organizationSlug,
+  )?.organizationId;
 
   const { data, isLoading, isError } =
     useGetOrganizationJoinRequest(organizationId);
-  console.log("organization-join-request", data);
 
   const handleInvite = () => {
     if (!selectedUsers || !organizationId) {
