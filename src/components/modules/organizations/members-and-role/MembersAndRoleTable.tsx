@@ -1,4 +1,5 @@
 "use client";
+import GlobalLoading from "@/app/loading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -92,6 +93,10 @@ const MembersAndRoleTable = ({
       },
     );
   };
+
+  if (isLoading) {
+    return <GlobalLoading />;
+  }
 
   return (
     <div className="w-full max-w-5xl rounded-lg border">
