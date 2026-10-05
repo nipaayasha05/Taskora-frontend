@@ -10,6 +10,7 @@ import {
 } from "@/hooks/organization.hooks";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
+import GlobalLoading from "@/app/loading";
 
 const InviteMembers = (
   // { organizationId }: InviteMembersProps
@@ -34,6 +35,8 @@ const InviteMembers = (
 
   const { data, isLoading, isError } =
     useGetOrganizationJoinRequest(organizationId);
+
+  console.log(data, "organization join requests");
 
   const handleInvite = () => {
     if (!selectedUsers || !organizationId) {
@@ -67,6 +70,10 @@ const InviteMembers = (
   const handleSelectedUser = (user: User) => {
     setSelectedUsers(user);
   };
+
+  if (isLoading) {
+    return <GlobalLoading />;
+  }
 
   return (
     <div className=" space-y-6">
@@ -109,20 +116,20 @@ const InviteMembers = (
           <div className="grid gap-6  md:grid-cols-2 xl:grid-cols-3">
             {data.data.map((request: OrganizationJoinRequest) => (
               <div key={request.id} className="rounded-xl border bg-card p-5">
-                <h3 className="font-semibold">{request.invitedTo.name}</h3>
+                <h3 className="font-semibold">{request?.invitedTo?.name}</h3>
 
                 <p className="text-sm text-muted-foreground">
-                  {request.invitedTo.email}
+                  {request?.invitedTo?.email}
                 </p>
 
-                <p className="mt-2 text-sm">Role: {request.role}</p>
+                <p className="mt-2 text-sm">Role: {request?.role}</p>
 
                 <p className="text-sm text-muted-foreground">
                   Status: {request.status}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  {new Date(request.createdAt).toLocaleDateString()}{" "}
-                  {new Date(request.createdAt).toLocaleTimeString([], {
+                  {new Date(request?.createdAt).toLocaleDateString()}{" "}
+                  {new Date(request?.createdAt).toLocaleTimeString([], {
                     hour: "2-digit",
                     minute: "2-digit",
                   })}

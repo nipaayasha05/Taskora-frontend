@@ -18,6 +18,7 @@ export type OrganizationMember = {
     id: string;
     name: string;
   };
+  user: UserData;
 };
 
 export type UserData = {
@@ -117,4 +118,10 @@ export type UpdateOrganizationJoinRequestPayload = {
   organizationId: string;
   invitedToId: string;
   status: "APPROVED" | "REJECTED";
+};
+
+export type UpdateOrganizationMemberRoleRequestPayload = {
+  organizationId: string;
+  memberId: string;
+  role: "TEAM_MEMBER" | "MANAGER";
 };

@@ -6,6 +6,7 @@ import {
   UserRoundCog,
   Settings,
   UserPlus,
+  UserCog,
 } from "lucide-react";
 
 export const ownerRoutes = [
@@ -21,6 +22,11 @@ export const ownerRoutes = [
         title: "Invite Members",
         url: "/invite-members",
         icon: UserPlus,
+      },
+      {
+        title: "Members & Role",
+        url: "/members-and-role",
+        icon: UserCog,
       },
       {
         title: "Projects",

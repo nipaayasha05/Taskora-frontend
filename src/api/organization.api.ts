@@ -3,6 +3,7 @@ import {
   CreateOrganizationJoinRequestPayload,
   CreateOrganizationPayload,
   UpdateOrganizationJoinRequestPayload,
+  UpdateOrganizationMemberRoleRequestPayload,
   UpdateOrganizationRequestPayload,
 } from "@/types";
 
@@ -51,6 +52,9 @@ export function createOrganizationJoinRequest(
 export function getOrganizationJoinRequest(organizationId: string) {
   return apiClient(`/organizations/${organizationId}/join`);
 }
+export function getAllOrganizationMembers(organizationId: string) {
+  return apiClient(`/organizations/${organizationId}/members`);
+}
 
 export function getUserOrganizationJoinRequest() {
   return apiClient(`/organizations/join/my-join`);
@@ -63,4 +67,15 @@ export function UpdateOrganizationJoinRequest(
     method: "PATCH",
     body: payload,
   });
+}
+export function UpdateOrganizationMemberRole(
+  payload: UpdateOrganizationMemberRoleRequestPayload,
+) {
+  return apiClient(
+    `/organizations/${payload.organizationId}/members/${payload.memberId}`,
+    {
+      method: "PATCH",
+      body: payload,
+    },
+  );
 }

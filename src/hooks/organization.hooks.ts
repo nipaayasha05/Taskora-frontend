@@ -2,10 +2,12 @@ import {
   createOrganization,
   createOrganizationJoinRequest,
   getAllOrganizationForPublic,
+  getAllOrganizationMembers,
   getOrganizationJoinRequest,
   getOrganizationsForAdmin,
   getUserOrganizationJoinRequest,
   UpdateOrganizationJoinRequest,
+  UpdateOrganizationMemberRole,
   UpdateOrganizationRequest,
 } from "@/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -51,6 +53,19 @@ export function useGetOrganizationJoinRequest(
     enabled: !!organizationId,
   });
 }
+export function useGetAllOrganizationMembers(
+  organizationId: string | undefined,
+) {
+  return useQuery({
+    queryKey: ["organizationsRole", organizationId],
+    queryFn: async () => {
+      const result = await getAllOrganizationMembers(organizationId!);
+
+      return result;
+    },
+    enabled: !!organizationId,
+  });
+}
 
 export function useGetUserOrganizationJoinRequest(
   organizationId: string | undefined,
@@ -64,5 +79,10 @@ export function useGetUserOrganizationJoinRequest(
 export function useUpdateOrganizationJoinRequest() {
   return useMutation({
     mutationFn: UpdateOrganizationJoinRequest,
+  });
+}
+export function useUpdateOrganizationMemberRole() {
+  return useMutation({
+    mutationFn: UpdateOrganizationMemberRole,
   });
 }
