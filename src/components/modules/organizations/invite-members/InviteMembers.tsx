@@ -11,6 +11,7 @@ import {
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import GlobalLoading from "@/app/loading";
+import { useQueryClient } from "@tanstack/react-query";
 
 const InviteMembers = (
   // { organizationId }: InviteMembersProps
@@ -33,6 +34,8 @@ const InviteMembers = (
       organizationSlug,
   )?.organizationId;
 
+  const queryClient = useQueryClient();
+
   const { data, isLoading, isError } =
     useGetOrganizationJoinRequest(organizationId);
 
@@ -53,9 +56,9 @@ const InviteMembers = (
           console.log(res);
           toast.success("User invited successfully");
 
-          // queryClient.invalidateQueries({
-          //   queryKey: ["organizations"],
-          // });
+          queryClient.invalidateQueries({
+            queryKey: ["organizationsRequests", organizationId],
+          });
 
           setSelectedUsers(null);
         },

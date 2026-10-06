@@ -71,9 +71,9 @@ const ProjectForm = () => {
         onSuccess: (res) => {
           console.log(res);
           toast.success("Project create request successfully");
-          //   queryClient.invalidateQueries({
-          //     queryKey: ["projects", organizationId],
-          //   });
+          queryClient.invalidateQueries({
+            queryKey: ["projects", organizationId],
+          });
           form.reset();
         },
 

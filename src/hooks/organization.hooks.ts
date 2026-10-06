@@ -48,7 +48,7 @@ export function useGetOrganizationJoinRequest(
   organizationId: string | undefined,
 ) {
   return useQuery({
-    queryKey: ["organizations", organizationId],
+    queryKey: ["organizationsRequests", organizationId],
     queryFn: () => getOrganizationJoinRequest(organizationId!),
     enabled: !!organizationId,
   });
