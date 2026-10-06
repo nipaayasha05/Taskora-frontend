@@ -14,11 +14,11 @@ export const teamMemberRoutes = [
         url: "",
         icon: LayoutDashboard,
       },
-      {
-        title: "Projects",
-        url: "/projects",
-        icon: FolderKanban,
-      },
+      // {
+      //   title: "Projects",
+      //   url: "/projects",
+      //   icon: FolderKanban,
+      // },
       {
         title: "My Tasks",
         url: "/tasks",
