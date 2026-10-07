@@ -27,6 +27,16 @@ export type CreateSprintPayload = {
   organizationId: string;
   projectId: string;
 };
+export type UpdateSprintPayload = {
+  name: string;
+  goal: string;
+  startDate: string;
+  endDate: string;
+  paymentAmount: number;
+  organizationId: string;
+  projectId: string;
+  sprintId: string;
+};
 
 export type Task = {
   id: string;
@@ -50,4 +60,5 @@ export type Payment = {
   clientId: string;
   amount: string;
   stripeCustomerId: string;
+  status: "PENDING" | "SUCCESS" | "FAILED";
 };

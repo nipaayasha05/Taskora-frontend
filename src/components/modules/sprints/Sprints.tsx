@@ -106,22 +106,25 @@ const Sprints = () => {
 
                     <div>
                       <p className="text-sm text-muted-foreground">Payment</p>
+
                       <p className="text-lg font-semibold">
                         ৳{sprint?.paymentAmount}
                       </p>
+
+                      {sprint?.payments?.some(
+                        (payment) => payment.status === "SUCCESS",
+                      ) ? (
+                        <Badge className="mt-1">Paid</Badge>
+                      ) : (
+                        <Badge variant="secondary" className="mt-1">
+                          Unpaid
+                        </Badge>
+                      )}
                     </div>
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-end">
-                  {/* <Button
-                    variant="outline"
-                    size="sm"
-                    // onClick={() => handleEditSprint(sprint)}
-                  >
-                    <Pencil className="mr-2 h-4 w-4" />
-                    Edit
-                  </Button> */}
-                  <SprintEditForm />
+                  <SprintEditForm sprint={sprint} />
                 </CardFooter>
               </Card>
             ))}

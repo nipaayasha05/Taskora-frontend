@@ -38,23 +38,61 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useQueryClient } from "@tanstack/react-query";
+import { useUpdateSprint } from "@/hooks/sprints.hook";
+import { Sprint, SprintStatus } from "@/types";
+import { toast } from "sonner";
+import { useCurrentOrganization } from "@/utils/organizationId";
+import { Spinner } from "../ui/spinner";
 
-const SprintEditForm = () => {
-  //  name: string;
-  //   goal?: string;
-  //   startDate: string;
-  //   endDate: string;
-  //   status?: SprintStatus;
-  //   paymentAmount: number;
+type SprintEditFormProps = {
+  sprint: Sprint;
+};
+
+const SprintEditForm = ({ sprint }: SprintEditFormProps) => {
+  const { mutate: updateSprint, isPending } = useUpdateSprint();
+  const queryClient = useQueryClient();
+
+  const formatDateForInput = (date: string) => {
+    return new Date(date).toISOString().split("T")[0];
+  };
+
+  const { organizationId } = useCurrentOrganization();
 
   const form = useForm({
     defaultValues: {
-      name: "",
-      goal: "",
-      startDate: "",
-      endDate: "",
-      status: "",
-      paymentAmount: 0,
+      name: sprint?.name,
+      goal: sprint?.goal,
+      startDate: formatDateForInput(sprint.startDate),
+      endDate: formatDateForInput(sprint.endDate),
+      status: sprint?.status,
+      paymentAmount: sprint?.paymentAmount,
+    },
+
+    onSubmit: ({ value }) => {
+      const updateSprintData = {
+        name: value.name,
+        goal: value.goal,
+        startDate: new Date(value.startDate).toISOString(),
+        endDate: new Date(value.endDate).toISOString(),
+        paymentAmount: value.paymentAmount,
+        organizationId: organizationId,
+        projectId: sprint.projectId,
+        sprintId: sprint.id,
+      };
+
+      updateSprint(updateSprintData, {
+        onSuccess: () => {
+          toast.success("Sprint update request successfully");
+          queryClient.invalidateQueries({
+            queryKey: ["sprints", organizationId],
+          });
+        },
+
+        onError: () => {
+          toast.error("Sprint update request failed");
+        },
+      });
     },
   });
 
@@ -62,15 +100,22 @@ const SprintEditForm = () => {
     <div className="max-w-5xl  p-4">
       <Dialog>
         <DialogTrigger asChild>
-          <Button
-            variant="outline"
-            size="sm"
-            className="cursor-pointer"
-            // onClick={() => handleEditSprint(sprint)}
-          >
-            <Pencil className="mr-2 h-4 w-4" />
-            Edit
-          </Button>
+          {sprint.status === "COMPLETED" ? (
+            <Button
+              variant="outline"
+              disabled={true}
+              size="sm"
+              className="cursor-pointer"
+            >
+              <Pencil className="mr-2 h-4 w-4" />
+              Edit
+            </Button>
+          ) : (
+            <Button variant="outline" size="sm" className="cursor-pointer">
+              <Pencil className="mr-2 h-4 w-4" />
+              Edit
+            </Button>
+          )}
         </DialogTrigger>
 
         <DialogContent>
@@ -82,13 +127,6 @@ const SprintEditForm = () => {
           </DialogHeader>
 
           <Card className="w-full shadow-sm ">
-            {/* <CardHeader className="">
-              <CardTitle>Edit Sprint</CardTitle>
-              <CardDescription>
-                Edit your sprint with your team.
-              </CardDescription>
-            </CardHeader> */}
-
             <CardContent>
               <form
                 onSubmit={(e) => {
@@ -227,11 +265,10 @@ const SprintEditForm = () => {
                           <div className="relative">
                             <CircleDot className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                             <div>
-                              {" "}
                               <Select
                                 value={field.state.value}
                                 onValueChange={(value) =>
-                                  field.handleChange(value)
+                                  field.handleChange(value as SprintStatus)
                                 }
                               >
                                 <SelectTrigger className="h-10 bg-muted pl-10">
@@ -275,7 +312,7 @@ const SprintEditForm = () => {
                               id={field.name}
                               name={field.name}
                               placeholder="Enter your organization description"
-                              // type="email"
+                              type="number"
                               value={field.state.value}
                               onChange={(e) =>
                                 field.handleChange(Number(e.target.value))
@@ -292,60 +329,17 @@ const SprintEditForm = () => {
                     }}
                   </form.Field>
 
-                  {/* <InviteMembersInput
-                    onSelectUser={(user) => {
-                      form.setFieldValue("clientId", user.id);
-                    }}
-                  /> */}
-
-                  <form.Subscribe
-                  // selector={(state) => [
-                  //   state.values.name,
-                  //   state.values.description,
-                  //   state.values.clientId,
-                  // ]}
-                  >
-                    <Button>Edit Sprint</Button>
-                    {/* {([name, description, clientId]) => (
-                      <Button
-                        disabled={
-                          createProjectPending ||
-                          !name.trim() ||
-                          !description.trim() ||
-                          !clientId
-                        }
-                        type="submit"
-                        className="w-full cursor-pointer"
-                      >
-                        {createProjectPending ? (
-                          <>
-                            <Spinner className="mr-2" /> Creating Project...
-                          </>
-                        ) : (
-                          <>Create Project</>
-                        )}
-                      </Button>
-                    )} */}
+                  <form.Subscribe>
+                    <Button type="submit" className="cursor-pointer">
+                      {isPending ? (
+                        <>
+                          <Spinner className="mr-2" /> Editing Sprint...
+                        </>
+                      ) : (
+                        <>Edit Sprint</>
+                      )}
+                    </Button>
                   </form.Subscribe>
-
-                  {/* <Button
-                    disabled={
-                      createProjectPending ||
-                      !form.state.values.name.trim() ||
-                      !form.state.values.description.trim() ||
-                      !form.state.values.clientId
-                    }
-                    type="submit"
-                    className="w-full cursor-pointer"
-                  >
-                    {createProjectPending ? (
-                      <>
-                        <Spinner className="mr-2" /> Creating Project...
-                      </>
-                    ) : (
-                      <>Create Project</>
-                    )}
-                  </Button> */}
                 </FieldGroup>
               </form>
             </CardContent>

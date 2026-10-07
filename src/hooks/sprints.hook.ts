@@ -1,4 +1,4 @@
-import { createSprint, getSprintsList } from "@/api";
+import { createSprint, getSprintsList, updateSprint } from "@/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function useGetAllSprints(
@@ -19,5 +19,11 @@ export function useGetAllSprints(
 export function useCreateSprint() {
   return useMutation({
     mutationFn: createSprint,
+  });
+}
+
+export function useUpdateSprint() {
+  return useMutation({
+    mutationFn: updateSprint,
   });
 }

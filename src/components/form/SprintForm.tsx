@@ -308,25 +308,6 @@ const SprintForm = () => {
                       </Button>
                     )}
                   </form.Subscribe>
-
-                  {/* <Button
-                    disabled={
-                      createProjectPending ||
-                      !form.state.values.name.trim() ||
-                      !form.state.values.description.trim() ||
-                      !form.state.values.clientId
-                    }
-                    type="submit"
-                    className="w-full cursor-pointer"
-                  >
-                    {createProjectPending ? (
-                      <>
-                        <Spinner className="mr-2" /> Creating Project...
-                      </>
-                    ) : (
-                      <>Create Project</>
-                    )}
-                  </Button> */}
                 </FieldGroup>
               </form>
             </CardContent>
