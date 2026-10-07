@@ -21,11 +21,11 @@ export const managerRoutes = [
         url: "/invite-members",
         icon: UserPlus,
       },
-      {
-        title: "Teams",
-        url: "/teams",
-        icon: UsersRound,
-      },
+      // {
+      //   title: "Teams",
+      //   url: "/teams",
+      //   icon: UsersRound,
+      // },
       {
         title: "Projects",
         url: "/projects",
@@ -33,14 +33,14 @@ export const managerRoutes = [
       },
     ],
   },
-  {
-    title: "Management",
-    items: [
-      {
-        title: "Members",
-        url: "/members",
-        icon: UserRoundCog,
-      },
-    ],
-  },
+  // {
+  //   title: "Management",
+  //   items: [
+  //     {
+  //       title: "Members",
+  //       url: "/members",
+  //       icon: UserRoundCog,
+  //     },
+  //   ],
+  // },
 ];

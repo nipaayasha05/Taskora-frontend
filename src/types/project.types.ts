@@ -65,3 +65,23 @@ export type CreateProjectPayload = {
   clientId: string;
   organizationId: string;
 };
+
+export type ProjectTeam = {
+  createdAt: string;
+  updatedAt: string;
+
+  id: string;
+
+  projectId: string;
+
+  team: {
+    id: string;
+    name: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+    organizationId: string;
+  };
+
+  teamId: string;
+};

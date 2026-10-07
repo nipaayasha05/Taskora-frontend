@@ -1,5 +1,10 @@
 import apiClient from "@/lib/apiClient";
-import { CreateSprintPayload, Sprint, UpdateSprintPayload } from "@/types";
+import {
+  AddTeamToSprintsPayload,
+  CreateSprintPayload,
+  Sprint,
+  UpdateSprintPayload,
+} from "@/types";
 
 export function getSprintsList(organizationId: string, projectId: string) {
   return apiClient(
@@ -16,6 +21,7 @@ export function updateSprint(payload: UpdateSprintPayload) {
         name: payload.name,
         goal: payload.goal,
         startDate: payload.startDate,
+        status: payload.status,
         endDate: payload.endDate,
         paymentAmount: payload.paymentAmount,
       },
@@ -35,6 +41,18 @@ export function createSprint(payload: CreateSprintPayload) {
         startDate: payload.startDate,
         endDate: payload.endDate,
         paymentAmount: payload.paymentAmount,
+      },
+    },
+  );
+}
+
+export function addTeamsToSprint(payload: AddTeamToSprintsPayload) {
+  return apiClient(
+    `/organization/projects/sprints/${payload.organizationId}/${payload.projectId}/${payload.sprintId}`,
+    {
+      method: "POST",
+      body: {
+        teamIds: payload.teamIds,
       },
     },
   );

@@ -32,6 +32,7 @@ export type UpdateSprintPayload = {
   goal: string;
   startDate: string;
   endDate: string;
+  status: SprintStatus;
   paymentAmount: number;
   organizationId: string;
   projectId: string;
@@ -61,4 +62,11 @@ export type Payment = {
   amount: string;
   stripeCustomerId: string;
   status: "PENDING" | "SUCCESS" | "FAILED";
+};
+
+export type AddTeamToSprintsPayload = {
+  organizationId: string;
+  projectId: string;
+  sprintId: string;
+  teamIds: string[];
 };

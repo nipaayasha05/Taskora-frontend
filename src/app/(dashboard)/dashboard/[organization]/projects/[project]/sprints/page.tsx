@@ -5,9 +5,9 @@ import React from "react";
 const SprintsPage = () => {
   return (
     <div>
-      <div className="flex items-center justify-end">
+      {/* <div className="flex items-center justify-end">
         <SprintForm />
-      </div>
+      </div> */}
       <Sprints />
     </div>
   );

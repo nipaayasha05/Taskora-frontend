@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useGetAllProjects } from "@/hooks";
+import { useGetAllProjects, useGetMe } from "@/hooks";
 import { useGetAllSprints } from "@/hooks/sprints.hook";
 import { useCurrentOrganization } from "@/utils/organizationId";
 import GlobalLoading from "@/app/loading";
@@ -15,9 +15,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sprint } from "@/types";
+import { OrganizationMember, Sprint } from "@/types";
 import { Button } from "@/components/ui/button";
 import SprintEditForm from "@/components/form/SprintEditForm";
+import SprintTeam from "./SprintTeam";
+import SprintTeamProject from "./SprintTeam";
+import { hasPageAccess } from "@/permissions/has-permission";
+import SprintForm from "@/components/form/SprintForm";
 
 const Sprints = () => {
   const { organizationId } = useCurrentOrganization();
@@ -25,6 +29,12 @@ const Sprints = () => {
   const params = useParams();
 
   const projectId = params.project as string;
+  const { data: me, isLoading: meLoading, isError: meIsError } = useGetMe();
+  const currentOrganization = me?.data?.organizationMembers?.find(
+    (member: OrganizationMember) => member.organizationId === organizationId,
+  );
+
+  const organizationRole = currentOrganization?.role;
 
   const { data, isLoading, isError } = useGetAllSprints(
     organizationId,
@@ -38,6 +48,11 @@ const Sprints = () => {
 
   return (
     <div>
+      {hasPageAccess(organizationRole, "CREATE_SPRINT") && (
+        <div className="flex items-center justify-end">
+          <SprintForm />
+        </div>
+      )}
       <div>
         {" "}
         {data?.data?.length === 0 ? (
@@ -102,6 +117,17 @@ const Sprints = () => {
                       <p className="text-lg font-semibold">
                         {sprint?.sprintTeams?.length}
                       </p>
+                      <p className="flex flex-wrap items-center gap-2">
+                        {sprint?.sprintTeams?.map((sprintTeam: any) => (
+                          <span
+                            key={sprintTeam.id}
+                            className="flex items-center gap-1"
+                          >
+                            <Users className="size-4 text-muted-foreground" />
+                            {sprintTeam?.team?.name}
+                          </span>
+                        ))}
+                      </p>
                     </div>
 
                     <div>
@@ -123,8 +149,17 @@ const Sprints = () => {
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter className="flex justify-end">
-                  <SprintEditForm sprint={sprint} />
+                <CardFooter>
+                  {organizationRole &&
+                    hasPageAccess(organizationRole, "UPDATE_SPRINT") && (
+                      <div className="flex items-center justify-end">
+                        <SprintTeamProject
+                          projectId={projectId}
+                          sprint={sprint}
+                        />
+                        <SprintEditForm sprint={sprint} />
+                      </div>
+                    )}
                 </CardFooter>
               </Card>
             ))}

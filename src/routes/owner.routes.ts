@@ -28,11 +28,11 @@ export const ownerRoutes = [
         url: "/members-and-role",
         icon: UserCog,
       },
-      {
-        title: "Teams",
-        url: "/teams",
-        icon: UsersRound,
-      },
+      // {
+      //   title: "Teams",
+      //   url: "/teams",
+      //   icon: UsersRound,
+      // },
       {
         title: "Projects",
         url: "/projects",

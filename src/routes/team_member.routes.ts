@@ -19,16 +19,16 @@ export const teamMemberRoutes = [
         url: "/projects",
         icon: FolderKanban,
       },
-      {
-        title: "My Tasks",
-        url: "/tasks",
-        icon: ListTodo,
-      },
-      {
-        title: "Sprints",
-        url: "/sprints",
-        icon: ListChecks,
-      },
+      // {
+      //   title: "My Tasks",
+      //   url: "/tasks",
+      //   icon: ListTodo,
+      // },
+      // {
+      //   title: "Sprints",
+      //   url: "/sprints",
+      //   icon: ListChecks,
+      // },
     ],
   },
 ];
