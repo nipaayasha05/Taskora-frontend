@@ -120,8 +120,8 @@ const Teams = () => {
           {data?.data?.map((team: Team) => (
             <Card key={team.id}>
               <CardHeader>
-                <CardTitle>{team.name}</CardTitle>
-                <CardDescription>{team.description}</CardDescription>
+                <CardTitle>{team?.name}</CardTitle>
+                <CardDescription>{team?.description}</CardDescription>
               </CardHeader>
 
               <CardContent>
@@ -129,7 +129,7 @@ const Teams = () => {
                   <span className="text-sm text-muted-foreground">Members</span>
 
                   <span className="text-sm font-medium">
-                    {team.members?.length ?? 0}
+                    {team?.members?.length ?? 0}
                   </span>
                 </div>
               </CardContent>
@@ -170,13 +170,13 @@ const Teams = () => {
                           />
 
                           <div className="flex-1">
-                            <p className="">{member.user.name}</p>
+                            <p className="">{member?.user?.name}</p>
                             <p className=" text-sm text-muted-foreground">
-                              {member.user.email}
+                              {member?.user?.email}
                             </p>
                           </div>
 
-                          <Badge variant="secondary">{member.role}</Badge>
+                          <Badge variant="secondary">{member?.role}</Badge>
                         </div>
                       ))}
                     </div>

@@ -22,19 +22,14 @@ export const managerRoutes = [
         icon: UserPlus,
       },
       {
-        title: "Projects",
-        url: "/projects",
-        icon: FolderKanban,
-      },
-      {
         title: "Teams",
         url: "/teams",
         icon: UsersRound,
       },
       {
-        title: "Sprints",
-        url: "/sprints",
-        icon: ListChecks,
+        title: "Projects",
+        url: "/projects",
+        icon: FolderKanban,
       },
     ],
   },

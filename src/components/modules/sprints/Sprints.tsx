@@ -1,0 +1,136 @@
+"use client";
+
+import { useParams } from "next/navigation";
+import { useGetAllProjects } from "@/hooks";
+import { useGetAllSprints } from "@/hooks/sprints.hook";
+import { useCurrentOrganization } from "@/utils/organizationId";
+import GlobalLoading from "@/app/loading";
+import { Pencil, Users } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Sprint } from "@/types";
+import { Button } from "@/components/ui/button";
+import SprintEditForm from "@/components/form/SprintEditForm";
+
+const Sprints = () => {
+  const { organizationId } = useCurrentOrganization();
+
+  const params = useParams();
+
+  const projectId = params.project as string;
+
+  const { data, isLoading, isError } = useGetAllSprints(
+    organizationId,
+    projectId,
+  );
+  console.log("sprints", data);
+
+  if (isLoading) {
+    return <GlobalLoading />;
+  }
+
+  return (
+    <div>
+      <div>
+        {" "}
+        {data?.data?.length === 0 ? (
+          <div className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed bg-muted/20 px-6 text-center">
+            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+              <Users className="h-6 w-6 text-primary" />
+            </div>
+
+            <h3 className=" font-semibold">No teams yet</h3>
+
+            <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+              You haven't created any teams yet. Create a team to start
+              organizing your members and projects.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 2xl:grid-cols-3">
+            {data?.data?.map((sprint: Sprint) => (
+              <Card key={sprint.id}>
+                <CardHeader>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <CardTitle>{sprint?.name}</CardTitle>
+                      <CardDescription className="mt-1">
+                        {sprint?.goal}
+                      </CardDescription>
+                    </div>
+
+                    <Badge>{sprint?.status}</Badge>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-muted-foreground">
+                        Start Date
+                      </p>
+                      <p className="font-medium">
+                        {new Date(sprint?.startDate).toLocaleDateString()}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm text-muted-foreground">End Date</p>
+                      <p className="font-medium">
+                        {new Date(sprint?.endDate).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-3">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Tasks</p>
+                      <p className="text-lg font-semibold">
+                        {sprint?.tasks?.length}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm text-muted-foreground">Teams</p>
+                      <p className="text-lg font-semibold">
+                        {sprint?.sprintTeams?.length}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm text-muted-foreground">Payment</p>
+                      <p className="text-lg font-semibold">
+                        ৳{sprint?.paymentAmount}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="flex justify-end">
+                  {/* <Button
+                    variant="outline"
+                    size="sm"
+                    // onClick={() => handleEditSprint(sprint)}
+                  >
+                    <Pencil className="mr-2 h-4 w-4" />
+                    Edit
+                  </Button> */}
+                  <SprintEditForm />
+                </CardFooter>
+              </Card>
+            ))}
+            <div />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Sprints;

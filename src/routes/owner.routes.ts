@@ -29,19 +29,14 @@ export const ownerRoutes = [
         icon: UserCog,
       },
       {
-        title: "Projects",
-        url: "/projects",
-        icon: FolderKanban,
-      },
-      {
         title: "Teams",
         url: "/teams",
         icon: UsersRound,
       },
       {
-        title: "Sprints",
-        url: "/sprints",
-        icon: ListChecks,
+        title: "Projects",
+        url: "/projects",
+        icon: FolderKanban,
       },
     ],
   },

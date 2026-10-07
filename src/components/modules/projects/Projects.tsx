@@ -1,4 +1,5 @@
 "use client";
+import GlobalLoading from "@/app/loading";
 import ProjectForm from "@/components/form/ProjectForm";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ import {
   useGetAllTeams,
   useGetMe,
 } from "@/hooks";
+import { hasPageAccess } from "@/permissions/has-permission";
 import {
   AddTeamToProjectPayload,
   OrganizationMember,
@@ -36,13 +38,14 @@ import {
 } from "@/types";
 import { useCurrentOrganization } from "@/utils/organizationId";
 import { useQueryClient } from "@tanstack/react-query";
-import { UserPlus, Users } from "lucide-react";
+import { ListChecks, Milestone, UserPlus, Users } from "lucide-react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
 const Projects = () => {
-  const { organizationId } = useCurrentOrganization();
+  const { organizationId, organizationSlug } = useCurrentOrganization();
 
   const { mutate: addTeamsToProject } = useAddTeamsToProject();
 
@@ -54,11 +57,19 @@ const Projects = () => {
     isError: teamsIsError,
   } = useGetAllTeams(organizationId);
 
+  const { data: me, isLoading: meLoading, isError: meIsError } = useGetMe();
   const { data, isLoading, isError } = useGetAllProjects(organizationId);
   const [selectTeam, setSelectTeam] = useState<string[]>([]);
 
   console.log("projects", data);
   console.log("allTeams", allTeams);
+
+  const currentOrganization = me?.data?.organizationMembers?.find(
+    (member: OrganizationMember) => member.organizationId === organizationId,
+  );
+
+  const organizationRole = currentOrganization?.role;
+  console.log("organizationRole", organizationRole);
 
   const handleSelectTeam = (teamId: string) => {
     setSelectTeam((prev) =>
@@ -91,14 +102,20 @@ const Projects = () => {
     });
   };
 
+  if (isLoading) {
+    return <GlobalLoading />;
+  }
+
   return (
     <div>
-      <div className="flex items-center justify-end">
-        {" "}
-        <div className="">
-          <ProjectForm />
+      {hasPageAccess(organizationRole, "CREATE_PROJECT") && (
+        <div className="flex items-center justify-end">
+          {" "}
+          <div className="">
+            <ProjectForm />
+          </div>
         </div>
-      </div>
+      )}
 
       <div>
         {data?.data?.length === 0 ? (
@@ -121,13 +138,13 @@ const Projects = () => {
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <CardTitle>{project.name}</CardTitle>
+                      <CardTitle>{project?.name}</CardTitle>
                       <CardDescription className="mt-1 line-clamp-1">
-                        {project.description}
+                        {project?.description}
                       </CardDescription>
                     </div>
 
-                    <Badge>{project.status}</Badge>
+                    <Badge>{project?.status}</Badge>
                   </div>
                 </CardHeader>
 
@@ -135,9 +152,9 @@ const Projects = () => {
                   {" "}
                   <div>
                     <p className="text-sm text-muted-foreground">Client</p>
-                    <p>{project.client.name}</p>
+                    <p>{project?.client?.name || "N/A"}</p>
                     <p className="text-sm text-muted-foreground">
-                      {project.client.email}
+                      {project?.client?.email || "N/A"}
                     </p>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
@@ -146,115 +163,132 @@ const Projects = () => {
                         Start Date
                       </p>
                       <p className="text-sm font-medium">
-                        {new Date(project.startDate).toLocaleDateString()}
+                        {new Date(project?.startDate).toLocaleDateString()}
                       </p>
                     </div>
 
                     <div>
                       <p className="text-sm text-muted-foreground">Due Date</p>
                       <p className="text-sm font-medium">
-                        {new Date(project.dueDate).toLocaleDateString()}
+                        {new Date(project?.dueDate).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-3">
                     <div className="rounded-lg border p-3 text-center">
                       <p className="text-lg font-semibold">
-                        {project.projectTeams.length}
+                        {project?.projectTeams?.length || 0}
                       </p>
                       <p className="text-xs text-muted-foreground">Teams</p>
                     </div>
 
                     <div className="rounded-lg border p-3 text-center">
                       <p className="text-lg font-semibold">
-                        {project.sprints.length}
+                        {project?.sprints?.length || 0}
                       </p>
                       <p className="text-xs text-muted-foreground">Sprints</p>
                     </div>
 
                     <div className="rounded-lg border p-3 text-center">
                       <p className="text-lg font-semibold">
-                        {project.tasks.length}
+                        {project?.tasks?.length || 0}
                       </p>
                       <p className="text-xs text-muted-foreground">Tasks</p>
                     </div>
                   </div>
                 </CardContent>
                 <CardFooter className="flex gap-2">
-                  {/* <Button variant="outline" className="flex-1 cursor-pointer">
-                    View Project
-                  </Button> */}
+                  <Link
+                    href={`/dashboard/${organizationSlug}/projects/${project.id}/sprints`}
+                    className="flex-1 cursor-pointer 
+                    "
+                  >
+                    <Button variant="outline">
+                      <ListChecks className="mr-2 h-4 w-4" /> View Sprints
+                    </Button>
+                  </Link>
 
                   {/* <Button className="flex-1 cursor-pointer">
                     <Users className="mr-2 h-4 w-4" />
                     Add Team
                   </Button> */}
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="w-full cursor-pointer"
-                      >
-                        <UserPlus className="mr-2 h-4 w-4" />
-                        Add Teams
-                      </Button>
-                    </DialogTrigger>
+                  <div className="flex-1 ">
+                    {organizationRole &&
+                      hasPageAccess(organizationRole, "ADD_TEAMS") && (
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className="w-full cursor-pointer "
+                            >
+                              <UserPlus className="mr-2 h-4 w-4" />
+                              Add Teams
+                            </Button>
+                          </DialogTrigger>
 
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Add Teams</DialogTitle>
-                        <DialogDescription>
-                          Select organization teams to add to this project.
-                          <span className=" text-primary">{project.name}</span>
-                        </DialogDescription>
-                      </DialogHeader>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>Add Teams</DialogTitle>
+                              <DialogDescription>
+                                Select organization teams to add to this
+                                project.
+                                <span className=" text-primary">
+                                  {project?.name}
+                                </span>
+                              </DialogDescription>
+                            </DialogHeader>
 
-                      <div className="space-y-2">
-                        {allTeams?.data?.map((team: Team) => (
-                          <div
-                            key={team.id}
-                            className="flex items-center gap-3 rounded-lg border p-3"
-                          >
-                            <Checkbox
-                              className="cursor-pointer"
-                              checked={selectTeam.includes(team.id)}
-                              onCheckedChange={() => handleSelectTeam(team.id)}
-                              disabled={project.projectTeams.some(
-                                (projectTeam) => projectTeam.teamId === team.id,
-                              )}
-                            />
+                            <div className="space-y-2">
+                              {allTeams?.data?.map((team: Team) => (
+                                <div
+                                  key={team.id}
+                                  className="flex items-center gap-3 rounded-lg border p-3"
+                                >
+                                  <Checkbox
+                                    className="cursor-pointer"
+                                    checked={selectTeam.includes(team.id)}
+                                    onCheckedChange={() =>
+                                      handleSelectTeam(team.id)
+                                    }
+                                    disabled={project.projectTeams.some(
+                                      (projectTeam) =>
+                                        projectTeam.teamId === team.id,
+                                    )}
+                                  />
 
-                            <div className="flex-1">
-                              <p className="">{team?.name}</p>
-                              <p className="text-sm text-muted-foreground">
-                                {team.description}
-                              </p>
+                                  <div className="flex-1">
+                                    <p className="">{team?.name}</p>
+                                    <p className="text-sm text-muted-foreground">
+                                      {team?.description}
+                                    </p>
+                                  </div>
+                                </div>
+                              ))}
                             </div>
-                          </div>
-                        ))}
-                      </div>
 
-                      <DialogFooter>
-                        <DialogClose asChild>
-                          <Button variant="outline">Cancel</Button>
-                        </DialogClose>
+                            <DialogFooter>
+                              <DialogClose asChild>
+                                <Button variant="outline">Cancel</Button>
+                              </DialogClose>
 
-                        <Button
-                          disabled={selectTeam.length === 0}
-                          onClick={() => handleAddTeam(project.id)}
-                          className="cursor-pointer"
-                        >
-                          {isLoading ? (
-                            <>
-                              <Spinner /> Adding...
-                            </>
-                          ) : (
-                            <>Add Teams</>
-                          )}
-                        </Button>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
+                              <Button
+                                disabled={selectTeam.length === 0}
+                                onClick={() => handleAddTeam(project.id)}
+                                className="cursor-pointer"
+                              >
+                                {isLoading ? (
+                                  <>
+                                    <Spinner /> Adding...
+                                  </>
+                                ) : (
+                                  <>Add Teams</>
+                                )}
+                              </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
+                      )}
+                  </div>
                 </CardFooter>
               </Card>
             ))}

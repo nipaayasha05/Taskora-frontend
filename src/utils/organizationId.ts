@@ -9,6 +9,8 @@ export function useCurrentOrganization() {
   const { data: me } = useGetMe();
   const params = useParams();
 
+  console.log("me", me);
+
   const organizationSlug = params.organization as string;
 
   const organization = me?.data?.organizationMembers?.find(
