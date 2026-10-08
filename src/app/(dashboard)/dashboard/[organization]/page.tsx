@@ -1,7 +1,12 @@
+import OrganizationDashboard from "@/components/modules/organizations/dashboard/OrganizationDashboard";
 import React from "react";
 
-const OrganizationDashboard = () => {
-  return <div>OrganizationDashboard</div>;
+const OrganizationDashboardPage = () => {
+  return (
+    <div>
+      <OrganizationDashboard />
+    </div>
+  );
 };
 
-export default OrganizationDashboard;
+export default OrganizationDashboardPage;

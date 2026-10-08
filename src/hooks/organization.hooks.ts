@@ -4,6 +4,7 @@ import {
   getAllOrganizationForPublic,
   getAllOrganizationMembers,
   getOrganizationJoinRequest,
+  getOrganizationOverview,
   getOrganizationsForAdmin,
   getUserOrganizationJoinRequest,
   UpdateOrganizationJoinRequest,
@@ -84,5 +85,13 @@ export function useUpdateOrganizationJoinRequest() {
 export function useUpdateOrganizationMemberRole() {
   return useMutation({
     mutationFn: UpdateOrganizationMemberRole,
+  });
+}
+
+export function useGetOrganizationOverview(organizationId: string | undefined) {
+  return useQuery({
+    queryKey: ["organizationOverview", organizationId],
+    queryFn: () => getOrganizationOverview(organizationId!),
+    // enabled: !!organizationId,
   });
 }

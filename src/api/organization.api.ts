@@ -79,3 +79,7 @@ export function UpdateOrganizationMemberRole(
     },
   );
 }
+
+export function getOrganizationOverview(organizationId: string) {
+  return apiClient(`/organizations/overview/${organizationId}`);
+}
