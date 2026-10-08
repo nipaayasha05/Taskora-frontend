@@ -1,3 +1,5 @@
+import { Payment } from "./project.types";
+
 export type SprintStatus = "PLANNED" | "ACTIVE" | "COMPLETED" | "CANCELLED";
 
 export type Sprint = {
@@ -45,6 +47,7 @@ export type Task = {
   sprintId: string;
   title: string;
   description: string | null;
+  payments: number;
 };
 
 export type SprintTeam = {
@@ -55,14 +58,14 @@ export type SprintTeam = {
   createdAt: string;
 };
 
-export type Payment = {
-  id: string;
-  sprintId: string;
-  clientId: string;
-  amount: string;
-  stripeCustomerId: string;
-  status: "PENDING" | "SUCCESS" | "FAILED";
-};
+// export type Payment = {
+//   id: string;
+//   sprintId: string;
+//   clientId: string;
+//   amount: string;
+//   stripeCustomerId: string;
+//   status: "PENDING" | "SUCCESS" | "FAILED";
+// };
 
 export type AddTeamToSprintsPayload = {
   organizationId: string;

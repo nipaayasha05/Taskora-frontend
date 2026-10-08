@@ -101,26 +101,26 @@ const UserInvitations = () => {
               <CardHeader>
                 <div>
                   <div className="relative h-14 w-14 overflow-hidden rounded-lg border bg-muted">
-                    {request.organization.logo ? (
+                    {request?.organization?.logo ? (
                       <Image
-                        src={request.organization.logo}
-                        alt={request.organization.name}
+                        src={request?.organization?.logo}
+                        alt={request?.organization?.name}
                         fill
                         className="object-cover"
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center text-lg font-semibold">
-                        {request.organization.name.charAt(0)}
+                        {request?.organization?.name.charAt(0)}
                       </div>
                     )}
                   </div>
                   <div className="">
                     <CardTitle className="">
-                      {request.organization.name}
+                      {request?.organization?.name}
                     </CardTitle>
 
                     <CardDescription>
-                      {request.organization.industry}
+                      {request?.organization?.industry}
                     </CardDescription>
                   </div>
                 </div>
@@ -128,7 +128,7 @@ const UserInvitations = () => {
 
               <CardContent>
                 <p className="text-sm leading-6 text-muted-foreground line-clamp-2">
-                  {request.organization.description}
+                  {request?.organization?.description}
                 </p>
                 <div className="flex items-center justify-between">
                   <div>

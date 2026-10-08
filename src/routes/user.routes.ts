@@ -1,4 +1,10 @@
-import { LayoutDashboard, CreditCard, Building2, MailPlus } from "lucide-react";
+import {
+  LayoutDashboard,
+  CreditCard,
+  Building2,
+  MailPlus,
+  FolderKanban,
+} from "lucide-react";
 
 export const userRoutes = [
   {
@@ -20,10 +26,15 @@ export const userRoutes = [
         icon: MailPlus,
       },
       {
-        title: "Payment",
-        url: "/dashboard/admin/payment",
-        icon: CreditCard,
+        title: "Projects",
+        url: "/dashboard/projects",
+        icon: FolderKanban,
       },
+      // {
+      //   title: "Payment",
+      //   url: "/dashboard/admin/payment",
+      //   icon: CreditCard,
+      // },
     ],
   },
 ];

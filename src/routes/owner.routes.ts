@@ -40,19 +40,19 @@ export const ownerRoutes = [
       },
     ],
   },
-  {
-    title: "Management",
-    items: [
-      {
-        title: "Members",
-        url: "/members",
-        icon: UserRoundCog,
-      },
-      {
-        title: "Settings",
-        url: "/settings",
-        icon: Settings,
-      },
-    ],
-  },
+  // {
+  //   title: "Management",
+  //   items: [
+  //     {
+  //       title: "Members",
+  //       url: "/members",
+  //       icon: UserRoundCog,
+  //     },
+  //     {
+  //       title: "Settings",
+  //       url: "/settings",
+  //       icon: Settings,
+  //     },
+  //   ],
+  // },
 ];

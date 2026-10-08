@@ -1,6 +1,7 @@
 import {
   addTeamsToProject,
   createProject,
+  getMyProjectList,
   getProjectList,
 } from "@/api/project.api";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -26,5 +27,12 @@ export function useGetAllProjects(organizationId: string | undefined) {
 export function useAddTeamsToProject() {
   return useMutation({
     mutationFn: addTeamsToProject,
+  });
+}
+
+export function useGetAllMyProjects() {
+  return useQuery({
+    queryKey: ["myProjects"],
+    queryFn: getMyProjectList,
   });
 }

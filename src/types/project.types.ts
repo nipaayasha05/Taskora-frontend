@@ -1,3 +1,5 @@
+import { SprintStatus, Task } from "./sprints.types";
+
 export type Project = {
   id: string;
   name: string;
@@ -31,6 +33,11 @@ export type Project = {
     name: string;
     goal: string;
     startDate: string;
+    endDate: string;
+    status: SprintStatus;
+    paymentAmount: number;
+    tasks: Task[];
+    payments: Payment[];
   }[];
 
   tasks: {
@@ -64,6 +71,15 @@ export type CreateProjectPayload = {
   dueDate?: Date;
   clientId: string;
   organizationId: string;
+};
+
+export type Payment = {
+  id: string;
+  sprintId: string;
+  clientId: string;
+  amount: string;
+  stripeCustomerId: string;
+  status: "PENDING" | "SUCCESS" | "FAILED";
 };
 
 export type ProjectTeam = {
