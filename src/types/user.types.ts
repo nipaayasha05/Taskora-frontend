@@ -7,3 +7,17 @@ export type User = {
   name: string;
   email: string;
 };
+
+export type Profile = {
+  id: string;
+  name: string;
+  email: string;
+  emailVerified: boolean;
+  status: string;
+  systemRole: string;
+  createdAt: string;
+  createdOrganizations: {
+    id: string;
+    name: string;
+  }[];
+};

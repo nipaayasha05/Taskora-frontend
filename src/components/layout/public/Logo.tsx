@@ -49,7 +49,7 @@ export const Logo = ({
       <h1 className="text-2xl font-extrabold tracking-tight">
         {showText && (
           <div className="text-2xl font-extrabold tracking-tight">
-            <span className="text-slate-900 dark:text-white">Task</span>
+            <span className="text-slate-600 dark:text-white">Task</span>
             <span className="text-blue-500 dark:text-blue-400">ora</span>
           </div>
         )}

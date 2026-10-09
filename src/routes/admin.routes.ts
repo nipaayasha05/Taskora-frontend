@@ -9,11 +9,11 @@ export const adminRoutes = [
         url: "/dashboard/admin",
         icon: LayoutDashboard,
       },
-      {
-        title: "Users",
-        url: "/dashboard/admin/users",
-        icon: UsersRound,
-      },
+      // {
+      //   title: "Users",
+      //   url: "/dashboard/admin/users",
+      //   icon: UsersRound,
+      // },
       {
         title: "Organizations",
         url: "/dashboard/admin/organizations",

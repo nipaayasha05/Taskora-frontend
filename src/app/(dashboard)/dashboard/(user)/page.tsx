@@ -1,7 +1,12 @@
+import UserDashboard from "@/components/modules/organizations/dashboard/UserDashboard";
 import React from "react";
 
-const UserDashboard = () => {
-  return <div>User Dashboard</div>;
+const UserDashboardPage = () => {
+  return (
+    <div>
+      <UserDashboard />
+    </div>
+  );
 };
 
-export default UserDashboard;
+export default UserDashboardPage;
