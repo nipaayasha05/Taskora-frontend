@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import React from "react";
 import MembersAndRoleTable from "./MembersAndRoleTable";
 import GlobalLoading from "@/app/loading";
+import SkeletonPage from "@/components/skeleton/skeleton";
 
 const MembersAndRole = () => {
   const { data: me } = useGetMe();
@@ -27,7 +28,7 @@ const MembersAndRole = () => {
   console.log("members", data);
 
   if (isLoading) {
-    return <GlobalLoading />;
+    return <SkeletonPage />;
   }
 
   return (

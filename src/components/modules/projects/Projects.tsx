@@ -1,6 +1,7 @@
 "use client";
 import GlobalLoading from "@/app/loading";
 import ProjectForm from "@/components/form/ProjectForm";
+import SkeletonPage from "@/components/skeleton/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -103,7 +104,7 @@ const Projects = () => {
   };
 
   if (isLoading) {
-    return <GlobalLoading />;
+    return <SkeletonPage />;
   }
 
   return (

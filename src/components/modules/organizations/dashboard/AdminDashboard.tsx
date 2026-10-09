@@ -24,6 +24,7 @@ import {
   YAxis,
 } from "recharts";
 import React from "react";
+import SkeletonPage from "@/components/skeleton/skeleton";
 
 const AdminDashboard = () => {
   const { data: adminOverview, isPending } = useGetAdminOverview();
@@ -32,7 +33,7 @@ const AdminDashboard = () => {
   const data = adminOverview?.data;
 
   if (isPending) {
-    return <GlobalLoading />;
+    return <SkeletonPage />;
   }
 
   return (

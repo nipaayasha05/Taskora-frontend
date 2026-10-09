@@ -1,4 +1,5 @@
 "use client";
+import SkeletonPage from "@/components/skeleton/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +27,10 @@ const UserSprint = () => {
     console.log("result", result);
     window.location.href = result.data?.paymentUrl?.checkoutUrl;
   };
+
+  if (isLoading) {
+    return <SkeletonPage />;
+  }
 
   return (
     <div>

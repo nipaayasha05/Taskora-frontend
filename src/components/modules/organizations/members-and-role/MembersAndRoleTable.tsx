@@ -1,5 +1,6 @@
 "use client";
 import GlobalLoading from "@/app/loading";
+import SkeletonPage from "@/components/skeleton/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -95,7 +96,7 @@ const MembersAndRoleTable = ({
   };
 
   if (isLoading) {
-    return <GlobalLoading />;
+    return <SkeletonPage />;
   }
 
   return (
@@ -222,7 +223,7 @@ const MembersAndRoleTable = ({
                 </TableCell>
 
                 <TableCell className="text-muted-foreground">
-                  {new Date(member.createdAt).toLocaleDateString()}
+                  {new Date(member?.createdAt).toLocaleDateString()}
                 </TableCell>
               </TableRow>
             ))}

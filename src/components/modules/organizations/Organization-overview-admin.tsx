@@ -1,5 +1,6 @@
 "use client";
 import GlobalLoading from "@/app/loading";
+import SkeletonPage from "@/components/skeleton/skeleton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -32,11 +33,7 @@ const OrganizationOverviewAdmin = () => {
   const queryClient = useQueryClient();
 
   if (isLoading) {
-    return (
-      <>
-        <GlobalLoading />
-      </>
-    );
+    return <SkeletonPage />;
   }
 
   if (isError) {
@@ -106,7 +103,7 @@ const OrganizationOverviewAdmin = () => {
                     <div className="flex  size-11 items-center justify-center overflow-hidden rounded-lg bg-primary/10 text-primary">
                       {organization.logo ? (
                         <img
-                          src={organization.logo}
+                          src={organization?.logo}
                           alt={organization.name}
                           className="w-12 h-12 rounded-full"
                         />
@@ -119,7 +116,7 @@ const OrganizationOverviewAdmin = () => {
                         {organization.name}
                       </CardTitle>
                       <p className="mt-1 text-xs text-muted-foreground">
-                        {organization.industry}
+                        {organization?.industry}
                       </p>
                     </div>
                   </div>
@@ -158,7 +155,7 @@ const OrganizationOverviewAdmin = () => {
 
               <CardContent className="space-y-4">
                 <p className="line-clamp-3 text-sm leading-6 text-muted-foreground">
-                  {organization.description}
+                  {organization?.description}
                 </p>
 
                 <div className="flex items-center gap-2 border-t pt-4 text-xs text-muted-foreground">
@@ -166,7 +163,7 @@ const OrganizationOverviewAdmin = () => {
 
                   <span>
                     Created{" "}
-                    {new Date(organization.createdAt).toLocaleDateString()}
+                    {new Date(organization?.createdAt).toLocaleDateString()}
                   </span>
                 </div>
 

@@ -44,14 +44,11 @@ import { QueryClient, useQueryClient } from "@tanstack/react-query";
 // Nav links kept in an array to stay organized
 const navLinks = [
   { label: "Home", href: "/", icon: House },
-  { label: "Services", href: "/services", icon: BriefcaseBusiness },
+
   { label: "Organizations", href: "/organizations", icon: Building2 },
+  { label: "Contact", href: "/contact", icon: Phone },
   { label: "About", href: "/about", icon: Info },
-  {
-    label: "Blogs",
-    href: "/blogs",
-    icon: BookOpen,
-  },
+
   // {
   //   label: "Category",
   //   href: "/blogsr",

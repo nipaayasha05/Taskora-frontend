@@ -1,5 +1,6 @@
 "use client";
 import GlobalLoading from "@/app/loading";
+import SkeletonPage from "@/components/skeleton/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -27,9 +28,8 @@ const OrganizationDashboard = () => {
     useGetOrganizationOverview(organizationId);
 
   console.log("organizationOverview", organizationOverview);
-
   if (isPending) {
-    return <GlobalLoading />;
+    return <SkeletonPage />;
   }
 
   const summary = organizationOverview?.data?.summary;

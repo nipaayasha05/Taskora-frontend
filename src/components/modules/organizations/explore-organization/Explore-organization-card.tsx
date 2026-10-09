@@ -23,8 +23,8 @@ const ExploreOrganizationCard = ({
           <div className="flex size-12 items-center justify-center overflow-hidden rounded-lg border bg-muted">
             {organization.logo ? (
               <Image
-                src={organization.logo}
-                alt={organization.name}
+                src={organization?.logo}
+                alt={organization?.name}
                 width={48}
                 height={48}
                 className="size-full object-cover"
@@ -35,12 +35,12 @@ const ExploreOrganizationCard = ({
           </div>
 
           <div className="">
-            <CardTitle className="text-lg">{organization.name}</CardTitle>
+            <CardTitle className="text-lg">{organization?.name}</CardTitle>
             <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
               <FolderKanban className="size-4" />
               <span>
-                {organization._count.projects}{" "}
-                {organization._count.projects === 1 ? "Project" : "Projects"}
+                {organization?._count.projects}{" "}
+                {organization?._count.projects === 1 ? "Project" : "Projects"}
               </span>
             </div>
           </div>
@@ -49,7 +49,7 @@ const ExploreOrganizationCard = ({
 
       <CardContent className="space-y-5">
         <p className="line-clamp-2 text-sm leading-6 text-muted-foreground">
-          {organization.description}
+          {organization?.description}
         </p>
 
         {owner && (
@@ -60,21 +60,21 @@ const ExploreOrganizationCard = ({
                   <p className="text-xs uppercase tracking-wide text-muted-foreground">
                     Owner
                   </p>
-                  <p className="font-medium">{owner.user.name}</p>
+                  <p className="font-medium">{owner?.user?.name}</p>
                   <div className="flex items-center gap-2">
                     <Mail className="size-4 " />
                     <span
                       className="
                   "
                     >
-                      {owner.user.email}
+                      {owner?.user?.email}
                     </span>
                   </div>
 
                   {owner.user.profile?.contactNumber && (
                     <div className="flex items-center gap-2">
                       <Phone className="size-4" />
-                      <span>{owner.user.profile.contactNumber}</span>
+                      <span>{owner?.user?.profile?.contactNumber}</span>
                     </div>
                   )}
                 </div>
@@ -84,23 +84,25 @@ const ExploreOrganizationCard = ({
                     <div className="space-y-2">
                       {manager.map((man) => (
                         <div
-                          key={man.user.email}
+                          key={man?.user?.email}
                           className="mt-2 space-y-1.5 text-sm  rounded-lg border bg-muted/30 p-3 text-muted-foreground"
                         >
                           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                            Manager{manager.length > 1 ? "s" : ""}
+                            Manager{manager?.length > 1 ? "s" : ""}
                           </p>
-                          <p className="font-medium">{man.user.name}</p>
+                          <p className="font-medium">{man?.user?.name}</p>
 
                           <div className="mt-2 space-y-1.5 text-sm text-muted-foreground">
                             <div className="flex items-center gap-2">
                               <Mail className="size-4" />
-                              <span className="truncate">{man.user.email}</span>
+                              <span className="truncate">
+                                {man?.user?.email}
+                              </span>
                             </div>
                             {man.user.profile?.contactNumber && (
                               <div className="flex items-center gap-2">
                                 <Phone className="size-4" />
-                                <span>{man.user.profile.contactNumber}</span>
+                                <span>{man?.user?.profile?.contactNumber}</span>
                               </div>
                             )}
                           </div>

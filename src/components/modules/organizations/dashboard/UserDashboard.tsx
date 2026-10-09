@@ -1,5 +1,6 @@
 "use client";
 import GlobalLoading from "@/app/loading";
+import SkeletonPage from "@/components/skeleton/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -29,7 +30,7 @@ const UserDashboard = () => {
   };
 
   if (isPending) {
-    return <GlobalLoading />;
+    return <SkeletonPage />;
   }
 
   return (

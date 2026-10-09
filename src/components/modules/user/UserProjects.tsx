@@ -1,4 +1,5 @@
 "use client";
+import SkeletonPage from "@/components/skeleton/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,6 +30,10 @@ import React from "react";
 const UserProjects = () => {
   const { data: myProject, isLoading, isError } = useGetAllMyProjects();
   console.log(myProject);
+
+  if (isLoading) {
+    return <SkeletonPage />;
+  }
 
   return (
     <div>

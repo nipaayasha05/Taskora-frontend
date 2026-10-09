@@ -1,3 +1,4 @@
+import SkeletonPage from "@/components/skeleton/skeleton";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -94,6 +95,10 @@ const SprintTeamProject = ({
     });
   };
 
+  if (projectsLoading) {
+    return <SkeletonPage />;
+  }
+
   return (
     <div>
       <div className="flex-1 ">
@@ -147,9 +152,9 @@ const SprintTeamProject = ({
                         )}
                       />
                       <div className="flex-1">
-                        <p>{team.name}</p>
+                        <p>{team?.name}</p>
                         <p className="text-sm text-muted-foreground">
-                          {team.description}
+                          {team?.description}
                         </p>
                       </div>
                     </div>

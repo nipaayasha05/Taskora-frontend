@@ -1,5 +1,6 @@
 "use client";
 import GlobalLoading from "@/app/loading";
+import SkeletonPage from "@/components/skeleton/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -21,7 +22,7 @@ const Profile = () => {
   //   console.log(profile);
 
   if (isLoading) {
-    return <GlobalLoading />;
+    return <SkeletonPage />;
   }
 
   return (

@@ -12,6 +12,7 @@ import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import GlobalLoading from "@/app/loading";
 import { useQueryClient } from "@tanstack/react-query";
+import SkeletonPage from "@/components/skeleton/skeleton";
 
 const InviteMembers = (
   // { organizationId }: InviteMembersProps
@@ -75,7 +76,7 @@ const InviteMembers = (
   };
 
   if (isLoading) {
-    return <GlobalLoading />;
+    return <SkeletonPage />;
   }
 
   return (

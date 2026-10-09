@@ -28,17 +28,64 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Spinner } from "../ui/spinner";
 import { useQueryClient } from "@tanstack/react-query";
+import { set } from "zod";
 
 export const LoginForm = () => {
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const [serverError, setServerError] = useState("");
+
   const { mutate: login, isPending: loginPending } = useLogin();
 
   const { mutate: googLogin } = useGoogleOAuth();
 
   const queryClient = useQueryClient();
+
+  const DEMO_CREDENTIALS = {
+    ADMIN: {
+      email: "admin@gmail.com",
+      password: "Aa@123",
+    },
+    TEAM_MEMBER: {
+      email: "dilaraabc@gmail.com",
+      password: "Aa@123",
+    },
+    MANAGER: {
+      email: "akash@gmail.com",
+      password: "Aa@123",
+    },
+    OWNER: {
+      email: "abc1@gmail.com",
+      password: "Aa@123",
+    },
+  };
+
+  const handleDemoLogin = async (
+    role: "ADMIN" | "TEAM_MEMBER" | "MANAGER" | "OWNER",
+  ) => {
+    const credentials = DEMO_CREDENTIALS[role];
+
+    setServerError("");
+
+    form.setFieldValue("email", credentials.email);
+    form.setFieldValue("password", credentials.password);
+
+    login(credentials, {
+      onSuccess: (res) => {
+        toast.success("Login successful");
+
+        queryClient.invalidateQueries({ queryKey: ["me"] });
+
+        router.push("/");
+      },
+      onError: (err) => {
+        setServerError(err.message);
+        toast.error(err.message);
+      },
+    });
+  };
 
   const form = useForm({
     defaultValues: {
@@ -172,6 +219,48 @@ export const LoginForm = () => {
                 <>Login</>
               )}
             </Button>
+
+            <div className="grid grid-cols-2 gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                disabled={loginPending}
+                onClick={() => handleDemoLogin("ADMIN")}
+                className="w-full"
+              >
+                {loginPending ? "Demo Admin..." : "Demo Admin"}
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                disabled={loginPending}
+                onClick={() => handleDemoLogin("OWNER")}
+                className="w-full"
+              >
+                {loginPending ? "Demo Owner..." : "Demo Owner"}
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                disabled={loginPending}
+                onClick={() => handleDemoLogin("MANAGER")}
+                className="w-full"
+              >
+                {loginPending ? "Demo Manager..." : "Demo Manager"}
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                disabled={loginPending}
+                onClick={() => handleDemoLogin("TEAM_MEMBER")}
+                className="w-full"
+              >
+                {loginPending ? "Demo Technician..." : "Demo Technician"}
+              </Button>
+            </div>
           </FieldGroup>
         </form>
         <FieldSeparator>Or continue with</FieldSeparator>

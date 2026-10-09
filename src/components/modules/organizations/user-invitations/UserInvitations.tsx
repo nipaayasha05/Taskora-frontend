@@ -1,4 +1,5 @@
 "use client";
+import SkeletonPage from "@/components/skeleton/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -91,6 +92,10 @@ const UserInvitations = () => {
       },
     );
   };
+
+  if (isPending) {
+    return <SkeletonPage />;
+  }
 
   return (
     <>

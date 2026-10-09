@@ -22,6 +22,7 @@ import SprintTeam from "./SprintTeam";
 import SprintTeamProject from "./SprintTeam";
 import { hasPageAccess } from "@/permissions/has-permission";
 import SprintForm from "@/components/form/SprintForm";
+import SkeletonPage from "@/components/skeleton/skeleton";
 
 const Sprints = () => {
   const { organizationId } = useCurrentOrganization();
@@ -43,7 +44,7 @@ const Sprints = () => {
   console.log("sprints", data);
 
   if (isLoading) {
-    return <GlobalLoading />;
+    return <SkeletonPage />;
   }
 
   return (

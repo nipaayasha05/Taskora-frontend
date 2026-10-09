@@ -1,5 +1,6 @@
 "use client";
 import GlobalLoading from "@/app/loading";
+import SkeletonPage from "@/components/skeleton/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -99,6 +100,10 @@ const Teams = () => {
       },
     });
   };
+
+  if (isLoading) {
+    return <SkeletonPage />;
+  }
 
   return (
     <div>
