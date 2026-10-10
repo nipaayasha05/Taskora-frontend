@@ -73,10 +73,10 @@ export const LoginForm = () => {
     form.setFieldValue("password", credentials.password);
 
     login(credentials, {
-      onSuccess: (res) => {
+      onSuccess: async (res) => {
         toast.success("Login successful");
 
-        queryClient.invalidateQueries({ queryKey: ["me"] });
+        await queryClient.invalidateQueries({ queryKey: ["me"] });
 
         router.push("/");
       },
@@ -104,11 +104,11 @@ export const LoginForm = () => {
       console.log(loginData);
 
       login(loginData, {
-        onSuccess: (res) => {
+        onSuccess: async (res) => {
           console.log(res);
           toast.success("Login successful");
 
-          queryClient.invalidateQueries({ queryKey: ["me"] });
+          await queryClient.invalidateQueries({ queryKey: ["me"] });
 
           router.push("/");
         },

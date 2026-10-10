@@ -88,14 +88,19 @@ export function Header() {
     }
 
     if (action === "logout") {
-      await logout();
-      toast.success("Logout successfully");
+      try {
+        await logout();
 
-      queryClient.removeQueries({
-        queryKey: ["me"],
-      });
+        queryClient.removeQueries({
+          queryKey: ["me"],
+        });
 
-      router.push("/login");
+        toast.success("Logout successfully");
+
+        router.replace("/login");
+      } catch (error) {
+        toast.error("Logout failed");
+      }
     }
   };
 
