@@ -44,3 +44,9 @@ export function getUsers(search?: string) {
     },
   });
 }
+
+export function logout() {
+  return apiClient("/auth/logout", {
+    method: "POST",
+  });
+}

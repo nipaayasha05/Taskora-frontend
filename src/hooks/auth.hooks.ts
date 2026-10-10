@@ -2,6 +2,7 @@ import {
   getMe,
   getUsers,
   googleOAuth,
+  logout,
   userLogin,
   userRegistration,
   verifyAccount,
@@ -43,5 +44,11 @@ export function useGetUsers(search?: string) {
   return useQuery({
     queryKey: ["users", search],
     queryFn: () => getUsers(search),
+  });
+}
+
+export function useLogout() {
+  return useMutation({
+    mutationFn: logout,
   });
 }

@@ -258,7 +258,7 @@ export const LoginForm = () => {
                 onClick={() => handleDemoLogin("TEAM_MEMBER")}
                 className="w-full"
               >
-                {loginPending ? "Demo Technician..." : "Demo Technician"}
+                {loginPending ? "Demo Team Member..." : "Demo Team Member"}
               </Button>
             </div>
           </FieldGroup>

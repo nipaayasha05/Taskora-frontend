@@ -26,7 +26,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { toast } from "sonner";
 
-import { useGetMe } from "@/hooks";
+import { useGetMe, useLogout } from "@/hooks";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -79,6 +79,7 @@ export function Header() {
   ];
 
   const queryClient = useQueryClient();
+  const { mutate: logout } = useLogout();
 
   const handleLogout = async (action: string) => {
     if (action === "dashboard") {
@@ -87,7 +88,7 @@ export function Header() {
     }
 
     if (action === "logout") {
-      // await logout();
+      await logout();
       toast.success("Logout successfully");
 
       queryClient.removeQueries({
